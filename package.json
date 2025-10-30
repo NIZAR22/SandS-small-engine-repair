@@ -1,0 +1,51 @@
+{
+  "name": "sands-small-engine-repair",
+  "version": "1.0.0",
+  "description": "Southern and Sons Small Engine Repair, LLC - Professional small engine repair services in Brevard County, FL",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "test:unit": "jest",
+    "test:watch": "jest --watch"
+  },
+  "dependencies": {
+    "@emailjs/browser": "^4.3.3",
+    "core-js": "^3.8.3",
+    "vue": "^2.6.14",
+    "vue-recaptcha": "^2.0.3",
+    "vue-router": "^3.5.0",
+    "vuetify": "^2.6.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.28.5",
+    "@babel/preset-env": "^7.28.5",
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-eslint": "~5.0.0",
+    "@vue/cli-plugin-router": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "@vue/eslint-config-standard": "^6.1.0",
+    "@vue/test-utils": "^1.3.5",
+    "babel-eslint": "^10.1.0",
+    "babel-jest": "^26.6.3",
+    "eslint": "^7.32.0",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-standard": "^5.0.0",
+    "eslint-plugin-vue": "^8.0.3",
+    "image-webpack-loader": "^8.1.0",
+    "jest": "^26.6.3",
+    "sass": "^1.32.7",
+    "sass-loader": "^12.0.0",
+    "vue-cli-plugin-vuetify": "~2.5.0",
+    "vue-jest": "^4.0.1",
+    "vue-template-compiler": "^2.6.14"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}
