@@ -596,7 +596,7 @@ export default {
               <v-btn
                 color="primary"
                 large
-                :href="'tel:3215550123'"
+                :href="'tel:3213451480'"
                 class="px-8"
               >
                 <v-icon left>mdi-phone</v-icon>
