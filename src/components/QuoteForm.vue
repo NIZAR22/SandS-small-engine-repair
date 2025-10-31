@@ -72,8 +72,8 @@ export default {
 
     // reCAPTCHA site key - switches between test and production keys
     recaptchaSiteKey: process.env.NODE_ENV === 'development'
-      ? '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI' // Google test key
-      : '6LdXYPgrAAAAAEenDITKIlCU5000l2wZU1HOZq_k' // Replace with your real key
+      ? '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI' // Development/test key
+      : process.env.VUE_APP_RECAPTCHA_SITE_KEY // Production key from environment
   }),
 
   methods: {

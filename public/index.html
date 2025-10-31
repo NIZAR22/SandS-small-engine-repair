@@ -9,6 +9,26 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css" rel="stylesheet">
     <title>Southern and Sons Small Engine Repair</title>
+    
+    <!-- Cloudflare Analytics with error handling -->
+    <script defer>
+      window.addEventListener('load', function() {
+        // Only load analytics in production
+        if (window.location.hostname !== 'localhost') {
+          try {
+            const script = document.createElement('script');
+            script.defer = true;
+            script.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+            script.onerror = function() {
+              console.warn('Analytics failed to load');
+            };
+            document.body.appendChild(script);
+          } catch (e) {
+            console.warn('Analytics initialization failed');
+          }
+        }
+      });
+    </script>
   </head>
   <body>
     <div id="app"></div>
