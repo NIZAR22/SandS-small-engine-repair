@@ -1,16 +1,14 @@
 <script>
 export default {
   name: 'ContactSection',
-
-  // Component data - reactive properties
   data: () => ({
     // Business contact information
     // TODO: Replace with actual business contact details
     contact: {
       phone: '3215550123',
       email: 'info@southernandsons.com',
-      location: 'Brevard County, FL',
-      address: '984 Cotorro Road Southeast, Palm Bay, FL, United States, Florida'
+      location: 'Brevard County, FL', // Change double quotes to single
+      address: 'Cotorro Road Southeast, Palm Bay, FL' // Change double quotes to single
     },
 
     // Business hours - same for all days
@@ -84,14 +82,14 @@ export default {
      * Gets Google Maps URL
      */
     googleMapsUrl () {
-      return `https://www.google.com/maps/search/?api=1&query=984+Cotorro+Road+Southeast+Palm+Bay+FL+United+States+Florida`
+      return 'https://www.google.com/maps/search/?api=1&query=984+Cotorro+Road+Southeast+Palm+Bay+FL+United+States+Florida'
     },
 
     /**
      * Gets Apple Maps URL
      */
     appleMapsUrl () {
-      return `https://maps.apple.com/?address=984,Cotorro,Road,Southeast,Palm%20Bay,FL,United%20States,Florida`
+      return 'https://maps.apple.com/?address=984,Cotorro,Road,Southeast,Palm%20Bay,FL,United%20States,Florida'
     }
   },
 

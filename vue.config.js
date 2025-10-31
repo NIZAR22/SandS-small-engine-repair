@@ -11,13 +11,13 @@ module.exports = defineConfig({
   ],
 
   // Production build configuration
-  publicPath: process.env.NODE_ENV === 'production' ? '/' : '/',
+  publicPath: '/SandS-small-engine-repair/',
   
   // Output directory for production build
   outputDir: 'dist',
   
   // Assets directory
-  assetsDir: 'assets',
+  assetsDir: '',
   
   // Enable source maps for debugging (disabled in production for security)
   productionSourceMap: false,
@@ -28,18 +28,22 @@ module.exports = defineConfig({
     optimization: {
       splitChunks: {
         chunks: 'all',
+        maxInitialRequests: Infinity,
+        minSize: 0,
         cacheGroups: {
-          vendor: {
-            test: /[\\/]node_modules[\\/]/,
-            name: 'vendors',
-            chunks: 'all',
-            priority: 10
-          },
-          vuetify: {
+          vuetifyVendor: {
             test: /[\\/]node_modules[\\/]vuetify[\\/]/,
             name: 'vuetify',
-            chunks: 'all',
-            priority: 20
+            priority: 20,
+            chunks: 'async'
+          },
+          vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name(module) {
+              const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1]
+              return `npm.${packageName.replace('@', '')}`
+            },
+            priority: 10
           }
         }
       }
@@ -59,9 +63,15 @@ module.exports = defineConfig({
     extract: process.env.NODE_ENV === 'production' ? {
       ignoreOrder: true
     } : false,
-    
-    // Source maps for CSS debugging
-    sourceMap: process.env.NODE_ENV !== 'production'
+    loaderOptions: {
+      sass: {
+        implementation: require('sass'),
+        sassOptions: {
+          fiber: false,
+          indentedSyntax: true
+        }
+      }
+    }
   },
 
   // Development server configuration
