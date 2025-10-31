@@ -11,13 +11,13 @@ module.exports = defineConfig({
   ],
 
   // Production build configuration
-  publicPath: '/SandS-small-engine-repair/',
+  publicPath: '/',
   
   // Output directory for production build
   outputDir: 'dist',
   
   // Assets directory
-  assetsDir: '',
+  assetsDir: 'assets',
   
   // Enable source maps for debugging (disabled in production for security)
   productionSourceMap: false,
@@ -28,25 +28,33 @@ module.exports = defineConfig({
     optimization: {
       splitChunks: {
         chunks: 'all',
-        maxInitialRequests: Infinity,
-        minSize: 0,
+        maxInitialRequests: 6,
         cacheGroups: {
-          vuetifyVendor: {
+          vuetify: {
+            name: 'chunk-vuetify',
             test: /[\\/]node_modules[\\/]vuetify[\\/]/,
-            name: 'vuetify',
             priority: 20,
-            chunks: 'async'
+            chunks: 'initial'
           },
-          vendor: {
+          vendors: {
+            name: 'chunk-vendors',
             test: /[\\/]node_modules[\\/]/,
-            name(module) {
-              const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1]
-              return `npm.${packageName.replace('@', '')}`
-            },
-            priority: 10
+            priority: 10,
+            chunks: 'initial'
+          },
+          common: {
+            name: 'chunk-common',
+            minChunks: 2,
+            priority: 5,
+            reuseExistingChunk: true
           }
         }
       }
+    },
+    performance: {
+      hints: 'warning',
+      maxEntrypointSize: 512000,
+      maxAssetSize: 512000
     },
     
     // Resolve configuration for better module resolution
@@ -60,15 +68,14 @@ module.exports = defineConfig({
   // CSS configuration
   css: {
     // Extract CSS for better caching
-    extract: process.env.NODE_ENV === 'production' ? {
-      ignoreOrder: true
-    } : false,
+    extract: process.env.NODE_ENV === 'production',
     loaderOptions: {
       sass: {
         implementation: require('sass'),
         sassOptions: {
           fiber: false,
-          indentedSyntax: true
+          indentedSyntax: true,
+          outputStyle: 'compressed'
         }
       }
     }

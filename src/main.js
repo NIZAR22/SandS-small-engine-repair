@@ -14,6 +14,7 @@ new Vue({
 }).$mount('#app')
 
 // Log successful initialization in development mode
-if (process.env.NODE_ENV === 'development') {
-  console.log('Southern and Sons Small Engine Repair - Application initialized successfully')
+if (process.env.NODE_ENV !== 'production') {
+  /* eslint-disable-next-line no-console */
+  console.log('Vue app initialized')
 }

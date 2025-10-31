@@ -187,9 +187,8 @@ export default {
           }, 10000)
         }
       } catch (error) {
-        // Handle any errors during email sending
+        /* eslint-disable-next-line no-console */
         console.error('EmailJS Error:', error)
-
         // Show error message to user
         this.showError = true
         this.errorMessage = 'Sorry, there was a problem sending your request. Please call us directly at (321) 555-0123.'
