@@ -115,7 +115,7 @@ The built files will be in the `dist/` directory, ready for deployment.
 #### Replace Placeholder Content
 
 1. **Logo**: Replace `src/assets/logo.png` with your actual logo
-2. **Phone Number**: Update `(321) 555-0123` in all components
+2. **Phone Number**: Update `(321) 345-1480` in all components
 3. **Email**: Update `info@southernandsons.com` in all components
 4. **Facebook URL**: Update the Facebook profile URL
 5. **Images**: Replace Unsplash URLs with your actual images
@@ -246,7 +246,7 @@ The website is fully responsive with breakpoints:
 For technical support or questions about this website:
 
 - **Email**: info@southernandsons.com
-- **Phone**: (321) 555-0123
+- **Phone**: (321) 345-1480
 - **Facebook**: [Southern and Sons Facebook](https://www.facebook.com/profile.php?id=61582473064509)
 
 ## 📄 License

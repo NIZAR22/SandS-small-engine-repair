@@ -191,7 +191,7 @@ export default {
         console.error('EmailJS Error:', error)
         // Show error message to user
         this.showError = true
-        this.errorMessage = 'Sorry, there was a problem sending your request. Please call us directly at (321) 555-0123.'
+        this.errorMessage = 'Sorry, there was a problem sending your request. Please call us directly at (321) 345-1480.'
 
         // Auto-hide error message after 10 seconds
         setTimeout(() => {
@@ -395,7 +395,7 @@ export default {
                   </div>
                   <div>
                     We've received your quote request and will contact you within 24 hours.
-                    If you need immediate assistance, please call us at (321) 555-0123.
+                    If you need immediate assistance, please call us at (321) 345-1480.
                   </div>
                 </v-col>
               </v-row>
@@ -489,9 +489,9 @@ export default {
                 prepend-inner-icon="mdi-phone"
                 @input="formatPhoneNumber"
                 class="mb-4"
-                hint="Format: (321) 555-1234"
+                hint="Format: (321) 345-1480"
                 persistent-hint
-                placeholder="(321) 555-1234"
+                placeholder="(321) 345-1480"
               ></v-text-field>
 
               <!--
@@ -600,7 +600,7 @@ export default {
                 class="px-8"
               >
                 <v-icon left>mdi-phone</v-icon>
-                <span class="text-h6">(321) 555-0123</span>
+                <span class="text-h6">(321) 345-1480</span>
               </v-btn>
             </div>
           </v-card>

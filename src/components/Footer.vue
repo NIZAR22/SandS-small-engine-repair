@@ -27,7 +27,7 @@ export default {
 
     /**
      * Formats phone number for display
-     * Converts 3215550123 to (321) 555-0123
+     * Converts 3215550123 to (321) 345-1480
      * @returns {string} Formatted phone number
      */
     formattedPhone () {
