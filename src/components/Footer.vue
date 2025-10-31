@@ -9,7 +9,7 @@ export default {
 
     // Business contact information for footer
     contact: {
-      phone: '3215550123',
+      phone: '3213451480',
       email: 'info@southernandsons.com'
     }
   }),

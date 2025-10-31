@@ -6,7 +6,7 @@ export default {
   data: () => ({
     // Business phone number for Call Now button
     // TODO: Replace with actual business phone number
-    phoneNumber: '3215550123',
+    phoneNumber: '3213451480',
 
     // Array of maintenance tips
     // Each tip has title, description, icon, and category

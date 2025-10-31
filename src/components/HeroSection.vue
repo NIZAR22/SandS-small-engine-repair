@@ -6,7 +6,7 @@ export default {
   data: () => ({
     // Business phone number
     // TODO: Replace with actual business phone number
-    phoneNumber: '3215550123'
+    phoneNumber: '3213451480'
   }),
 
   // Computed properties - derived reactive data

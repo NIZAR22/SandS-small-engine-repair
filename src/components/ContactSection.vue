@@ -5,7 +5,7 @@ export default {
     // Business contact information
     // TODO: Replace with actual business contact details
     contact: {
-      phone: '3215550123',
+      phone: '3213451480',
       email: 'info@southernandsons.com',
       location: 'Brevard County, FL', // Change double quotes to single
       address: 'Cotorro Road Southeast, Palm Bay, FL' // Change double quotes to single
