@@ -18,7 +18,10 @@ export default {
     },
 
     // Opening hours, e.g. 8:00 AM - 6:00 PM
-    hours: formatHours(business.hours)
+    hours: formatHours(business.hours),
+
+    // Year the business opened (null until set in the config)
+    foundedYear: business.foundedYear
   }),
 
   computed: {
@@ -64,18 +67,11 @@ export default {
   Uses primary blue color for consistency
 */
 .footer-section {
-  background-color: #1976D2 !important; /* Primary blue */
+  background-color: var(--v-primary-base) !important; /* Primary blue */
   color: white !important;
   width: 100%;
   position: relative !important;
   bottom: 0;
-}
-
-/*
-  Make text explicitly visible
-*/
-.white--text {
-  color: white !important;
 }
 
 /*
@@ -116,8 +112,8 @@ export default {
   Changes background to accent color
 */
 .social-icon:hover {
-  background-color: #F57C00 !important; /* Accent orange */
-  border-color: #F57C00 !important;
+  background-color: var(--v-accent-base) !important; /* Accent orange */
+  border-color: var(--v-accent-base) !important;
 }
 
 /*
@@ -135,18 +131,6 @@ export default {
 
 /* Mobile phones */
 @media (max-width: 600px) {
-  /* Center align all footer content on mobile */
-  .text-md-left,
-  .text-md-right {
-    text-align: center !important;
-    color: white !important;
-  }
-
-  /* Add spacing between stacked sections */
-  .footer-section .v-col {
-    margin-bottom: 16px;
-  }
-
   .footer-section {
     margin-top: 24px;
   }
@@ -265,6 +249,7 @@ export default {
             x-large
             class="social-icon"
             color="white"
+            aria-label="Southern and Sons on Facebook (opens in a new tab)"
           >
             <v-icon size="32">mdi-facebook</v-icon>
           </v-btn>
@@ -299,11 +284,11 @@ export default {
           class="text-center text-md-right"
         >
           <!--
-            Website credit
-            Optional: Remove or replace with your own text
+            Service area tagline
+            "since <year>" appears once foundedYear is set in src/config/business.js
           -->
           <p class="text-body-1 white--text mb-0">
-            Proudly serving Brevard County since {{ currentYear }}
+            Proudly serving Brevard County<template v-if="foundedYear"> since {{ foundedYear }}</template>
           </p>
         </v-col>
       </v-row>

@@ -15,16 +15,17 @@ export default new Vuetify({
       light: {
         // Primary color: Deep Blue for trust and professionalism
         primary: '#1976D2',
-        // Accent color: Orange for call-to-action buttons
-        accent: '#F57C00',
+        // Accent color: Burnt orange for call-to-action buttons
+        // Dark enough for white button text (4.8:1, WCAG AA)
+        accent: '#B35900',
         // Secondary color: Light blue for subtle elements
         secondary: '#42A5F5',
-        // Success color: Green for positive feedback
-        success: '#4CAF50',
+        // Success color: Green for positive feedback (white text 5.1:1)
+        success: '#2E7D32',
         // Warning color: Amber for important notices
         warning: '#FF9800',
-        // Error color: Red for errors and alerts
-        error: '#F44336',
+        // Error color: Red for errors and alerts (white text 5.6:1)
+        error: '#C62828',
         // Info color: Blue for informational content
         info: '#2196F3'
       }

@@ -203,8 +203,8 @@ export default {
 
 /* Tablets and smaller */
 @media (max-width: 960px) {
-  /* Reduce image height on tablets */
-  .service-image-card .v-img {
+  /* Reduce image height on tablets (v-img renders with the v-image class) */
+  .service-image-card .v-image {
     height: 400px !important;
   }
 
@@ -217,7 +217,7 @@ export default {
 /* Mobile phones */
 @media (max-width: 600px) {
   /* Further reduce image height on mobile */
-  .service-image-card .v-img {
+  .service-image-card .v-image {
     height: 300px !important;
   }
 
@@ -267,7 +267,7 @@ export default {
           <h2 class="text-h3 font-weight-bold primary--text mb-4">
             What We Repair
           </h2>
-          <p class="text-h6 grey--text text--darken-1">
+          <p class="text-h6 grey--text text--darken-2">
             Professional Small Engine Repair Services in Brevard County, FL
           </p>
         </v-col>
@@ -399,7 +399,7 @@ export default {
             <h3 class="text-h5 font-weight-bold mb-3 primary--text">
               Shop Service
             </h3>
-            <p class="text-h6 grey--text text--darken-1">
+            <p class="text-h6 grey--text text--darken-2">
               Bring your equipment to our shop for professional repair and maintenance
             </p>
           </v-card>
@@ -426,7 +426,7 @@ export default {
             <h3 class="text-h5 font-weight-bold mb-3 primary--text">
               Service Area
             </h3>
-            <p class="text-h6 grey--text text--darken-1">
+            <p class="text-h6 grey--text text--darken-2">
               Proudly serving all of Brevard County, Florida
             </p>
           </v-card>
@@ -453,7 +453,7 @@ export default {
             <h3 class="text-h5 font-weight-bold mb-3 primary--text">
               7 Days a Week
             </h3>
-            <p class="text-h6 grey--text text--darken-1">
+            <p class="text-h6 grey--text text--darken-2">
               Open Monday through Sunday, {{ hours }}
             </p>
           </v-card>
@@ -499,7 +499,7 @@ export default {
                 <h4 class="text-h5 font-weight-bold mb-2">
                   {{ benefit.title }}
                 </h4>
-                <p class="text-h6 grey--text text--darken-1">
+                <p class="text-h6 grey--text text--darken-2">
                   {{ benefit.description }}
                 </p>
               </div>

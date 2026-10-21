@@ -64,10 +64,10 @@ export default {
 .hero-background {
   /*
     Background image - stock photo of mechanic working on small engine
-    TODO: Replace this URL with actual high-quality photo
-    Using Unsplash for placeholder - replace with your own image
+    Served from src/assets (also used by the navbar in App.vue);
+    replace hero.jpg with your own wide photo to change it
   */
-  background-image: url('https://images.unsplash.com/photo-1487754180451-c456f719a1fc?w=1920');
+  background-image: url('~@/assets/hero.jpg');
 
   /* Background image settings for optimal display */
   background-size: cover; /* Scale to cover entire container */
@@ -132,13 +132,6 @@ export default {
 @media (min-width: 601px) and (max-width: 960px) {
   .hero-content {
     padding-top: 112px; /* Increased from 84px */
-  }
-}
-
-/* For larger screens with extended app bar */
-@media (min-width: 961px) {
-  .hero-content {
-    padding-top: 128px; /* Increased from 96px */
   }
 }
 
@@ -226,7 +219,6 @@ export default {
   bottom: 30px;
   left: 50%;
   transform: translateX(-50%); /* Center horizontally */
-  cursor: pointer;
 }
 
 /*
@@ -296,8 +288,8 @@ export default {
     font-size: 1.125rem !important; /* 18px */
   }
 
-  /* Reduce logo size on very small screens */
-  .hero-logo img {
+  /* Reduce logo size on very small screens (v-img renders a div, not an img) */
+  .hero-logo .v-image {
     max-height: 150px !important;
   }
 

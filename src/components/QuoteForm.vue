@@ -438,7 +438,7 @@ export default {
           <h2 class="text-h3 font-weight-bold primary--text mb-4">
             Get Your Free Quote
           </h2>
-          <p class="text-h6 grey--text text--darken-1">
+          <p class="text-h6 grey--text text--darken-2">
             Fill out the form below and we'll get back to you within 24 hours
           </p>
         </v-col>
@@ -634,7 +634,7 @@ export default {
                 REQUIRED FIELD NOTE
                 Explains asterisk notation to users
               -->
-              <p class="text-body-1 grey--text text--darken-1 mb-6">
+              <p class="text-body-1 grey--text text--darken-2 mb-6">
                 * Required fields
               </p>
 
@@ -703,7 +703,7 @@ export default {
             <v-divider class="my-8"></v-divider>
 
             <div class="text-center">
-              <p class="text-h6 grey--text text--darken-1 mb-3">
+              <p class="text-h6 grey--text text--darken-2 mb-3">
                 Prefer to call? We're here to help!
               </p>
               <v-btn

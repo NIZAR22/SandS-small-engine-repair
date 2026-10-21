@@ -61,57 +61,49 @@ export default {
     },
 
     /**
-     * Checks if the device is mobile based on window width
-     * @returns {boolean} True if mobile, false otherwise
+     * Detects iPhone, iPad and Mac, where Apple Maps links open the Maps app
+     * in any browser (iPads report themselves as Macintosh)
+     * @returns {boolean} True on Apple devices
      */
-    isMobile () {
-      return window.innerWidth <= 600
+    hasAppleMaps () {
+      return /iPhone|iPad|iPod|Macintosh/.test(navigator.userAgent)
     },
 
     /**
-     * Detects if the browser is Safari
-     * @returns {boolean} True if Safari, false otherwise
-     */
-    isSafari () {
-      const ua = navigator.userAgent.toLowerCase()
-      return (ua.indexOf('safari') !== -1 && ua.indexOf('chrome') === -1)
-    },
-
-    /**
-     * Detects if using Safari browser and Apple device
-     * @returns {boolean} True if Safari on Apple device
-     */
-    isAppleMapsCompatible () {
-      const ua = navigator.userAgent
-      const isIOS = /iPhone|iPad|iPod/.test(ua)
-      const isMac = /Macintosh/.test(ua)
-      const isSafari = /^((?!chrome|android).)*safari/i.test(ua)
-
-      return (isIOS || isMac) && isSafari
-    },
-
-    /**
-     * Gets Google Maps URL
+     * Gets Google Maps directions URL
      */
     googleMapsUrl () {
-      return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(this.mapQuery)}`
+      return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(this.mapQuery)}`
     },
 
     /**
-     * Gets Apple Maps URL
+     * Gets Apple Maps directions URL
      */
     appleMapsUrl () {
-      return `https://maps.apple.com/?address=${encodeURIComponent(this.mapQuery)}`
+      return `https://maps.apple.com/?daddr=${encodeURIComponent(this.mapQuery)}`
     }
   },
 
   methods: {
     /**
+     * Opens directions to the shop
+     * Apple devices get a choice of maps app; everyone else goes to Google Maps
+     */
+    getDirections () {
+      if (this.hasAppleMaps) {
+        this.showMapDialog = true
+      } else {
+        this.openMaps('google')
+      }
+    },
+
+    /**
      * Opens the selected maps application
+     * noopener stops the new tab from getting a handle back to this page
      */
     openMaps (type) {
       const url = type === 'apple' ? this.appleMapsUrl : this.googleMapsUrl
-      window.open(url, '_blank')
+      window.open(url, '_blank', 'noopener')
       this.showMapDialog = false
     }
   }
@@ -173,7 +165,7 @@ export default {
 */
 .hours-card {
   border-radius: 12px !important;
-  border-left: 4px solid #1976D2;
+  border-left: 4px solid var(--v-primary-base);
   margin-bottom: 24px;
   height: auto !important; /* Ensure card expands to content */
   overflow: visible !important; /* Prevent content clipping */
@@ -251,11 +243,6 @@ export default {
     min-height: auto !important;
     padding: 8px 0 !important;
   }
-
-  /* Force proper spacing between sections */
-  .v-row {
-    margin-bottom: 16px !important;
-  }
 }
 </style>
 
@@ -284,7 +271,7 @@ export default {
           <h2 class="text-h3 font-weight-bold primary--text mb-4">
             Contact Us
           </h2>
-          <p class="text-h6 grey--text text--darken-1">
+          <p class="text-h6 grey--text text--darken-2">
             Get in touch with Southern and Sons Small Engine Repair
           </p>
         </v-col>
@@ -324,7 +311,7 @@ export default {
               <p class="text-h6 grey--text text--darken-2 mb-0">
                 {{ formattedPhone }}
               </p>
-              <p class="text-body-1 grey--text text--darken-1 mt-2">
+              <p class="text-body-1 grey--text text--darken-2 mt-2">
                 Click to call
               </p>
             </div>
@@ -358,7 +345,7 @@ export default {
               <p class="text-h6 grey--text text--darken-2 mb-0">
                 {{ emailParts[0] }}<wbr>{{ emailParts[1] }}
               </p>
-              <p class="text-body-1 grey--text text--darken-1 mt-2">
+              <p class="text-body-1 grey--text text--darken-2 mt-2">
                 Click to email
               </p>
             </div>
@@ -367,8 +354,8 @@ export default {
 
         <!--
           LOCATION
-          Displays service area
-          Not clickable since no specific address
+          Displays service area, plus a map and directions to the shop
+          (customers bring their equipment in)
         -->
         <v-col
           cols="12"
@@ -388,13 +375,19 @@ export default {
             <p class="text-h6 grey--text text--darken-2 mb-0">
               {{ contact.location }}
             </p>
-            <p class="text-body-1 grey--text text--darken-1 mt-2">
+            <p class="text-body-1 grey--text text--darken-2 mt-2">
               Shop service only
             </p>
-            <!-- Show map button on mobile -->
+            <!-- Map and directions -->
             <div class="mt-4">
-              <!-- Show embedded map on all viewports -->
+              <!--
+                Embedded map on all viewports
+                title names the map for screen readers; loading="lazy" waits
+                until it's near the screen before loading Google Maps
+              -->
               <iframe
+                title="Map showing the Southern and Sons shop"
+                loading="lazy"
                 width="100%"
                 height="200"
                 frameborder="0"
@@ -403,10 +396,9 @@ export default {
                 allowfullscreen
               ></iframe>
 
-              <!-- Show directions button below map on mobile -->
+              <!-- Directions button below the map -->
               <v-btn
-                v-if="isMobile"
-                @click="showMapDialog = true"
+                @click="getDirections"
                 color="primary"
                 outlined
                 large
@@ -416,7 +408,7 @@ export default {
                 Get Directions
               </v-btn>
 
-              <!-- Map selection dialog -->
+              <!-- Maps app choice, shown on Apple devices -->
               <v-dialog
                 v-model="showMapDialog"
                 max-width="300"
@@ -553,7 +545,8 @@ export default {
             class="social-btn px-8"
           >
             <v-icon left large>mdi-facebook</v-icon>
-            <span class="text-h6">Visit Us on Facebook</span>
+            <!-- Bold so the white text on Facebook blue counts as large text (WCAG AA) -->
+            <span class="text-h6 font-weight-bold">Visit Us on Facebook</span>
           </v-btn>
         </v-col>
       </v-row>

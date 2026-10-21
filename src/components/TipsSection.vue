@@ -90,7 +90,7 @@ export default {
   height: 100%; /* Equal height cards in grid */
   display: flex;
   flex-direction: column;
-  border-left: 4px solid #F57C00; /* Orange accent border on left */
+  border-left: 4px solid var(--v-accent-base); /* Orange accent border on left */
 }
 
 /*
@@ -128,7 +128,7 @@ export default {
   padding: 4px 12px;
   border-radius: 16px;
   background-color: #E3F2FD; /* Light blue background */
-  color: #1976D2; /* Primary blue text */
+  color: var(--v-primary-darken1); /* Darker primary blue: readable on the light blue (WCAG AA) */
   font-size: 0.875rem;
   font-weight: 600;
   text-transform: uppercase;
@@ -143,7 +143,7 @@ export default {
 .disclaimer-section {
   background-color: #FFF3E0; /* Light orange background */
   border-radius: 12px;
-  border: 2px solid #F57C00; /* Orange border */
+  border: 2px solid var(--v-accent-base); /* Orange border */
 }
 
 /*
@@ -218,7 +218,7 @@ export default {
           <h2 class="text-h3 font-weight-bold primary--text mb-4">
             DIY Maintenance Tips
           </h2>
-          <p class="text-h6 grey--text text--darken-1">
+          <p class="text-h6 grey--text text--darken-2">
             Keep Your Small Engines Running Smoothly with These Simple Tips
           </p>
         </v-col>
@@ -282,7 +282,7 @@ export default {
               Detailed explanation of the maintenance task
               Large text for senior-friendly readability
             -->
-            <p class="text-h6 grey--text text--darken-1 text-center">
+            <p class="text-h6 grey--text text--darken-2 text-center">
               {{ tip.description }}
             </p>
           </v-card>
@@ -331,7 +331,7 @@ export default {
           <h3 class="text-h4 font-weight-bold primary--text">
             Need Professional Service?
           </h3>
-          <p class="text-h6 grey--text text--darken-1 mt-3">
+          <p class="text-h6 grey--text text--darken-2 mt-3">
             Our expert technicians are here to help with all your small engine repair needs
           </p>
         </v-col>

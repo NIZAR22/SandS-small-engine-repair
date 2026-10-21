@@ -8,6 +8,7 @@ import QuoteForm from './components/QuoteForm.vue'
 import ContactSection from './components/ContactSection.vue'
 import AppFooter from './components/Footer.vue'
 import business from './config/business'
+import { formatPhone } from './utils/format'
 
 export default {
   name: 'App',
@@ -62,19 +63,32 @@ export default {
         title: 'Contact',
         icon: 'mdi-phone'
       }
-    ],
-
-    // Flag to track if the user is on a mobile device
-    // Initial value set based on window width
-    isMobile: window.innerWidth <= 600
+    ]
   }),
+
+  computed: {
+    /**
+     * Phones and tablets (below 960px) get the menu button instead of the
+     * row of navigation buttons, which doesn't fit next to the business name
+     * Vuetify's breakpoint service keeps this up to date on resize
+     * @returns {boolean} True below 960px
+     */
+    isMobile () {
+      return this.$vuetify.breakpoint.smAndDown
+    },
+
+    /**
+     * Screen reader label for the icon-only call button
+     * @returns {string} e.g. Call us at (321) 345-1480
+     */
+    callLabel () {
+      return `Call us at ${formatPhone(this.phoneNumber)}`
+    }
+  },
 
   // Lifecycle hook - runs after component is mounted to DOM
   mounted () {
-    // Set up resize and scroll listeners
-    // Resize listener updates isMobile flag
     // Scroll listener tracks active section
-    window.addEventListener('resize', this.handleResize)
     window.addEventListener('scroll', this.onScroll)
 
     // Initial check for active section on page load
@@ -83,8 +97,7 @@ export default {
 
   // Lifecycle hook - runs before component is destroyed
   beforeDestroy () {
-    // Remove resize and scroll listeners to prevent memory leaks
-    window.removeEventListener('resize', this.handleResize)
+    // Remove scroll listener to prevent memory leaks
     window.removeEventListener('scroll', this.onScroll)
   },
 
@@ -160,14 +173,6 @@ export default {
           this.activeSection = sectionId
         }
       })
-    },
-
-    /**
-     * Handle window resize event
-     * Updates isMobile flag based on current window width
-     */
-    handleResize () {
-      this.isMobile = window.innerWidth <= 600
     }
   }
 }
@@ -199,10 +204,12 @@ export default {
 /*
   Active navigation button styling
   Makes it obvious which section user is currently viewing
-  Orange accent color for high visibility
+  Bold white text with a white underline; orange text on the blue bar
+  would be too low-contrast to read
 */
-.accent--text {
+.nav-active {
   font-weight: 700 !important;
+  box-shadow: inset 0 -3px 0 #fff !important;
 }
 
 /*
@@ -221,16 +228,17 @@ export default {
 /*
   Pulse animation keyframes
   Creates subtle pulsing effect to draw eye to call button
+  Color is the theme accent (#B35900) with transparency
 */
 @keyframes pulse {
   0% {
-    box-shadow: 0 0 0 0 rgba(245, 124, 0, 0.7);
+    box-shadow: 0 0 0 0 rgba(179, 89, 0, 0.7);
   }
   70% {
-    box-shadow: 0 0 0 15px rgba(245, 124, 0, 0);
+    box-shadow: 0 0 0 15px rgba(179, 89, 0, 0);
   }
   100% {
-    box-shadow: 0 0 0 0 rgba(245, 124, 0, 0);
+    box-shadow: 0 0 0 0 rgba(179, 89, 0, 0);
   }
 }
 
@@ -307,7 +315,7 @@ section {
       dark
       shrink-on-scroll
       prominent
-      src="https://images.unsplash.com/photo-1487754180451-c456f719a1fc?w=1920"
+      src="@/assets/hero.jpg"
       fade-img-on-scroll
       elevate-on-scroll
     >
@@ -326,12 +334,13 @@ section {
       <!--
         MOBILE MENU BUTTON - Shows when navigation buttons would be too crowded
         Opens navigation drawer when clicked
-        Shows on all screens except xl (extra large 1904px+)
+        Shows below 960px (phones and tablets)
       -->
       <v-app-bar-nav-icon
         v-if="isMobile"
         @click="drawer = !drawer"
         large
+        aria-label="Open menu"
       ></v-app-bar-nav-icon>
 
       <!-- LOGO AND BUSINESS NAME - Always visible -->
@@ -353,9 +362,10 @@ section {
       <v-spacer></v-spacer>
 
       <!--
-        DESKTOP NAVIGATION - Only shows on extra large screens
+        DESKTOP NAVIGATION - Shows at 960px and wider
         Large clickable buttons for each section
-        Hidden on 1904px and below to prevent crowding
+        Hidden on smaller screens to prevent crowding
+        aria-current tells screen readers which section is on screen
       -->
       <div v-if="!isMobile" class="d-flex align-center">
         <v-btn
@@ -364,7 +374,8 @@ section {
           text
           large
           @click="scrollToSection(item.id)"
-          :class="{ 'accent--text': activeSection === item.id }"
+          :class="{ 'nav-active': activeSection === item.id }"
+          :aria-current="activeSection === item.id ? 'location' : null"
           class="mx-1"
         >
           <v-icon left>{{ item.icon }}</v-icon>
@@ -405,6 +416,7 @@ section {
             icon
             @click="drawer = false"
             color="white"
+            aria-label="Close menu"
           >
             <v-icon>mdi-close</v-icon>
           </v-btn>
@@ -461,9 +473,9 @@ section {
       MAIN CONTENT AREA
       v-main is required container for app content
       Automatically adds padding for app-bar and other app-level components
-      id is used as scroll-target for the app-bar
+      (removed in the styles above; the hero adds its own top padding)
     -->
-    <v-main id="scrolling-content">
+    <v-main>
       <!--
         All section components rendered here
         Each section has an id for scroll navigation
@@ -517,6 +529,7 @@ section {
       color="accent"
       x-large
       :href="'tel:' + phoneNumber"
+      :aria-label="callLabel"
       class="floating-call-btn"
       elevation="8"
     >
