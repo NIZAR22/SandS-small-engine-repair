@@ -31,7 +31,6 @@ export default {
     activeSection: 'hero',
 
     // Business phone number for floating call button
-    // TODO: Replace with actual phone number
     phoneNumber: '3213451480',
 
     // Navigation items for mobile drawer

@@ -5,7 +5,6 @@ export default {
   // Component data - reactive properties
   data: () => ({
     // Business phone number
-    // TODO: Replace with actual business phone number
     phoneNumber: '3213451480'
   }),
 
