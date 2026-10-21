@@ -1,11 +1,14 @@
 <script>
+import business from '@/config/business'
+import { formatPhone } from '@/utils/format'
+
 export default {
   name: 'HeroSection',
 
   // Component data - reactive properties
   data: () => ({
     // Business phone number
-    phoneNumber: '3213451480'
+    phoneNumber: business.phone
   }),
 
   // Computed properties - derived reactive data
@@ -17,19 +20,7 @@ export default {
      * @returns {string} Formatted phone number
      */
     formattedPhoneNumber () {
-      // Extract phone number parts using regex or string manipulation
-      const cleaned = ('' + this.phoneNumber).replace(/\D/g, '') // Remove non-digits
-
-      // Match phone number pattern: (XXX) XXX-XXXX
-      const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/)
-
-      if (match) {
-        // Return formatted string
-        return '(' + match[1] + ') ' + match[2] + '-' + match[3]
-      }
-
-      // Return original if format doesn't match (fallback)
-      return this.phoneNumber
+      return formatPhone(this.phoneNumber)
     }
   },
 

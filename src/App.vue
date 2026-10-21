@@ -7,6 +7,7 @@ import TipsSection from './components/TipsSection.vue'
 import QuoteForm from './components/QuoteForm.vue'
 import ContactSection from './components/ContactSection.vue'
 import AppFooter from './components/Footer.vue'
+import business from './config/business'
 
 export default {
   name: 'App',
@@ -31,7 +32,7 @@ export default {
     activeSection: 'hero',
 
     // Business phone number for floating call button
-    phoneNumber: '3213451480',
+    phoneNumber: business.phone,
 
     // Navigation items for mobile drawer
     // Each item maps to a section id

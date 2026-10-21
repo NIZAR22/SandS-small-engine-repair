@@ -1,9 +1,15 @@
 <script>
+import business from '@/config/business'
+import { formatHours } from '@/utils/format'
+
 export default {
   name: 'AboutServices',
 
   // Component data - reactive properties
   data: () => ({
+    // Opening hours for the availability card, e.g. 8:00 AM - 6:00 PM
+    hours: formatHours(business.hours),
+
     // Array of services offered
     // Each service has name, description, and Material Design icon
     servicesOffered: [
@@ -448,7 +454,7 @@ export default {
               7 Days a Week
             </h3>
             <p class="text-h6 grey--text text--darken-1">
-              Open Monday through Sunday, 8:00 AM - 6:00 PM
+              Open Monday through Sunday, {{ hours }}
             </p>
           </v-card>
         </v-col>

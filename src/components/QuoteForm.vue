@@ -2,6 +2,8 @@
 // Import EmailJS for form submission without backend server
 import emailjs from '@emailjs/browser'
 import { VueRecaptcha } from 'vue-recaptcha'
+import business from '@/config/business'
+import { formatPhone, formatPhoneInput } from '@/utils/format'
 
 export default {
   name: 'QuoteForm',
@@ -20,6 +22,9 @@ export default {
     showSuccess: false,
     showError: false,
     errorMessage: '',
+
+    // Business phone number for the "call us instead" fallbacks
+    businessPhone: business.phone,
 
     // EmailJS configuration
     emailConfig: {
@@ -76,6 +81,16 @@ export default {
       : process.env.VUE_APP_RECAPTCHA_SITE_KEY // Production key from environment
   }),
 
+  computed: {
+    /**
+     * Business phone number for display
+     * @returns {string} Formatted phone number, e.g. (321) 345-1480
+     */
+    businessPhoneDisplay () {
+      return formatPhone(this.businessPhone)
+    }
+  },
+
   methods: {
     /**
      * Formats phone number as user types
@@ -88,23 +103,7 @@ export default {
         return
       }
 
-      // Get current phone value and remove all non-digit characters
-      let phone = this.formData.phone.replace(/\D/g, '')
-
-      // Limit to 10 digits (US phone number)
-      phone = phone.substring(0, 10)
-
-      // Format based on length
-      if (phone.length >= 6) {
-        // Full format: (XXX) XXX-XXXX
-        this.formData.phone = `(${phone.substring(0, 3)}) ${phone.substring(3, 6)}-${phone.substring(6)}`
-      } else if (phone.length >= 3) {
-        // Partial format: (XXX) XXX
-        this.formData.phone = `(${phone.substring(0, 3)}) ${phone.substring(3)}`
-      } else if (phone.length > 0) {
-        // Start format: (XXX
-        this.formData.phone = `(${phone}`
-      }
+      this.formData.phone = formatPhoneInput(this.formData.phone)
     },
 
     /**
@@ -191,7 +190,7 @@ export default {
         console.error('EmailJS Error:', error)
         // Show error message to user
         this.showError = true
-        this.errorMessage = 'Sorry, there was a problem sending your request. Please call us directly at (321) 345-1480.'
+        this.errorMessage = `Sorry, there was a problem sending your request. Please call us directly at ${this.businessPhoneDisplay}.`
 
         // Auto-hide error message after 10 seconds
         setTimeout(() => {
@@ -395,7 +394,7 @@ export default {
                   </div>
                   <div>
                     We've received your quote request and will contact you within 24 hours.
-                    If you need immediate assistance, please call us at (321) 345-1480.
+                    If you need immediate assistance, please call us at {{ businessPhoneDisplay }}.
                   </div>
                 </v-col>
               </v-row>
@@ -489,9 +488,9 @@ export default {
                 prepend-inner-icon="mdi-phone"
                 @input="formatPhoneNumber"
                 class="mb-4"
-                hint="Format: (321) 345-1480"
+                hint="Format: (555) 123-4567"
                 persistent-hint
-                placeholder="(321) 345-1480"
+                placeholder="(555) 123-4567"
               ></v-text-field>
 
               <!--
@@ -596,11 +595,11 @@ export default {
               <v-btn
                 color="primary"
                 large
-                :href="'tel:3213451480'"
+                :href="'tel:' + businessPhone"
                 class="px-8"
               >
                 <v-icon left>mdi-phone</v-icon>
-                <span class="text-h6">(321) 345-1480</span>
+                <span class="text-h6">{{ businessPhoneDisplay }}</span>
               </v-btn>
             </div>
           </v-card>

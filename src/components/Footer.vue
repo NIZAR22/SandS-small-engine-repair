@@ -1,17 +1,24 @@
 <script>
+import business from '@/config/business'
+import { formatPhone, formatHours, splitEmail } from '@/utils/format'
+
 export default {
   name: 'AppFooter',
 
   // Component data - reactive properties
   data: () => ({
     // Social media link
-    facebookUrl: 'https://www.facebook.com/profile.php?id=61582473064509',
+    facebookUrl: business.facebookUrl,
 
     // Business contact information for footer
     contact: {
-      phone: '3213451480',
-      email: 'info@southernandsons.com'
-    }
+      phone: business.phone,
+      email: business.email,
+      location: business.serviceArea
+    },
+
+    // Opening hours, e.g. 8:00 AM - 6:00 PM
+    hours: formatHours(business.hours)
   }),
 
   computed: {
@@ -27,18 +34,19 @@ export default {
 
     /**
      * Formats phone number for display
-     * Converts 3215550123 to (321) 345-1480
+     * Converts 3213451480 to (321) 345-1480
      * @returns {string} Formatted phone number
      */
     formattedPhone () {
-      const cleaned = ('' + this.contact.phone).replace(/\D/g, '')
-      const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/)
+      return formatPhone(this.contact.phone)
+    },
 
-      if (match) {
-        return '(' + match[1] + ') ' + match[2] + '-' + match[3]
-      }
-
-      return this.contact.phone
+    /**
+     * Email split before the @ so it wraps cleanly on phones
+     * @returns {string[]} [name, '@domain']
+     */
+    emailParts () {
+      return splitEmail(this.contact.email)
     }
   }
 }
@@ -81,6 +89,16 @@ export default {
   transition: all 0.3s ease;
   display: inline-flex;
   align-items: center;
+  max-width: 100%;
+}
+
+/*
+  Let long values (the email address) wrap onto a second line
+  instead of pushing the page wider than a phone screen
+*/
+.footer-link span {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 /*
@@ -204,7 +222,7 @@ export default {
               class="footer-link"
             >
               <v-icon color="white" class="mr-2">mdi-email</v-icon>
-              <span class="text-h6">{{ contact.email }}</span>
+              <span class="text-h6">{{ emailParts[0] }}<wbr>{{ emailParts[1] }}</span>
             </a>
           </div>
 
@@ -212,7 +230,7 @@ export default {
           <div>
             <div class="footer-link" style="cursor: default;">
               <v-icon color="white" class="mr-2">mdi-map-marker</v-icon>
-              <span class="text-h6">Brevard County, FL</span>
+              <span class="text-h6">{{ contact.location }}</span>
             </div>
           </div>
         </v-col>
@@ -232,7 +250,7 @@ export default {
             Monday - Sunday
           </p>
           <p class="text-h6 white--text mb-4">
-            8:00 AM - 6:00 PM
+            {{ hours }}
           </p>
 
           <!-- Social media link -->

@@ -1,34 +1,29 @@
 <script>
+import business from '@/config/business'
+import { formatPhone, formatHours, splitEmail } from '@/utils/format'
+
+const WEEKDAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+
 export default {
   name: 'ContactSection',
   data: () => ({
-    // Business contact information
-    // TODO: Replace with actual business contact details
+    // Business contact information (edit in src/config/business.js)
     contact: {
-      phone: '3213451480',
-      email: 'info@southernandsons.com',
-      location: 'Brevard County, FL', // Change double quotes to single
-      address: 'Cotorro Road Southeast, Palm Bay, FL' // Change double quotes to single
+      phone: business.phone,
+      email: business.email,
+      location: business.serviceArea
     },
 
     // Business hours - same for all days
     // Displayed in easy-to-read format for senior users
-    businessHours: [
-      { day: 'Monday', hours: '8:00 AM - 6:00 PM' },
-      { day: 'Tuesday', hours: '8:00 AM - 6:00 PM' },
-      { day: 'Wednesday', hours: '8:00 AM - 6:00 PM' },
-      { day: 'Thursday', hours: '8:00 AM - 6:00 PM' },
-      { day: 'Friday', hours: '8:00 AM - 6:00 PM' },
-      { day: 'Saturday', hours: '8:00 AM - 6:00 PM' },
-      { day: 'Sunday', hours: '8:00 AM - 6:00 PM' }
-    ],
+    businessHours: WEEKDAYS.map(day => ({ day, hours: formatHours(business.hours) })),
 
     // Social media link
     // Facebook page for the business
-    facebookUrl: 'https://www.facebook.com/profile.php?id=61582473064509',
+    facebookUrl: business.facebookUrl,
 
     // Dialog visibility for map selection
-    showMapDialog: false // Add this for the dialog
+    showMapDialog: false
   }),
 
   computed: {
@@ -38,14 +33,31 @@ export default {
      * @returns {string} Formatted phone number
      */
     formattedPhone () {
-      const cleaned = ('' + this.contact.phone).replace(/\D/g, '')
-      const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/)
+      return formatPhone(this.contact.phone)
+    },
 
-      if (match) {
-        return '(' + match[1] + ') ' + match[2] + '-' + match[3]
-      }
+    /**
+     * Email split before the @ so it wraps cleanly on phones
+     * @returns {string[]} [name, '@domain']
+     */
+    emailParts () {
+      return splitEmail(this.contact.email)
+    },
 
-      return this.contact.phone
+    /**
+     * Shop address as one line for map searches
+     * @returns {string} e.g. 984 Cotorro Road Southeast, Palm Bay, FL
+     */
+    mapQuery () {
+      const { street, city, state } = business.address
+      return `${street}, ${city}, ${state}`
+    },
+
+    /**
+     * Gets the embedded Google Maps URL for the shop location
+     */
+    mapEmbedUrl () {
+      return `https://www.google.com/maps?q=${encodeURIComponent(this.mapQuery)}&output=embed`
     },
 
     /**
@@ -82,14 +94,14 @@ export default {
      * Gets Google Maps URL
      */
     googleMapsUrl () {
-      return 'https://www.google.com/maps/search/?api=1&query=984+Cotorro+Road+Southeast+Palm+Bay+FL+United+States+Florida'
+      return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(this.mapQuery)}`
     },
 
     /**
      * Gets Apple Maps URL
      */
     appleMapsUrl () {
-      return 'https://maps.apple.com/?address=984,Cotorro,Road,Southeast,Palm%20Bay,FL,United%20States,Florida'
+      return `https://maps.apple.com/?address=${encodeURIComponent(this.mapQuery)}`
     }
   },
 
@@ -141,7 +153,6 @@ export default {
   border-radius: 12px;
   background-color: #f5f5f5; /* Light gray background */
   transition: all 0.3s ease;
-  word-break: break-all;
   overflow-wrap: anywhere;
 }
 
@@ -345,7 +356,7 @@ export default {
                 Email Us
               </h3>
               <p class="text-h6 grey--text text--darken-2 mb-0">
-                {{ contact.email }}
+                {{ emailParts[0] }}<wbr>{{ emailParts[1] }}
               </p>
               <p class="text-body-1 grey--text text--darken-1 mt-2">
                 Click to email
@@ -388,7 +399,7 @@ export default {
                 height="200"
                 frameborder="0"
                 style="border:0"
-                :src="'https://www.google.com/maps?q=984+Cotorro+Road+Southeast+Palm+Bay+FL+United+States+Florida&output=embed'"
+                :src="mapEmbedUrl"
                 allowfullscreen
               ></iframe>
 

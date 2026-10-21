@@ -1,11 +1,13 @@
 <script>
+import business from '@/config/business'
+
 export default {
   name: 'TipsSection',
 
   // Component data - reactive properties
   data: () => ({
     // Business phone number for Call Now button
-    phoneNumber: '3213451480',
+    phoneNumber: business.phone,
 
     // Array of maintenance tips
     // Each tip has title, description, icon, and category
