@@ -16,12 +16,15 @@ export function formatPhone (digits) {
 /**
  * Formats a phone number while the user types
  * Builds up (XXX) XXX-XXXX from the digits typed so far, at most 10 digits
+ * A leading 1 is dropped: US area codes never start with 1, so it's the +1
+ * country code (common when phones autofill the number)
  * @param {string} value - Current field value
  * @returns {string} Formatted value, or the input unchanged if it has no digits
  */
 export function formatPhoneInput (value) {
-  // Remove all non-digit characters and limit to 10 digits (US phone number)
-  const phone = String(value || '').replace(/\D/g, '').substring(0, 10)
+  // Remove all non-digit characters and the +1 country code,
+  // then limit to 10 digits (US phone number)
+  const phone = String(value || '').replace(/\D/g, '').replace(/^1/, '').substring(0, 10)
 
   if (phone.length >= 6) {
     // Full format: (XXX) XXX-XXXX

@@ -5,6 +5,9 @@ import { VueRecaptcha } from 'vue-recaptcha'
 import business from '@/config/business'
 import { formatPhone, formatPhoneInput } from '@/utils/format'
 
+// How long to wait for Google's reCAPTCHA widget before telling the user it didn't load
+const CAPTCHA_LOAD_TIMEOUT = 15000
+
 export default {
   name: 'QuoteForm',
   components: {
@@ -12,9 +15,6 @@ export default {
   },
   // Component data - reactive properties
   data: () => ({
-    // Form validity state - tracks if all validation rules pass
-    valid: false,
-
     // Form loading state - shows spinner during email sending
     loading: false,
 
@@ -53,8 +53,8 @@ export default {
       // Rule 1: Field is required
       v => !!v || 'Email is required',
       // Rule 2: Valid email format using regex
-      // Checks for pattern: text@text.text
-      v => /.+@.+\..+/.test(v) || 'Email must be valid'
+      // Checks for pattern: text@text.text, with no spaces
+      v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) || 'Email must be valid'
     ],
 
     phoneRules: [
@@ -72,6 +72,13 @@ export default {
     ],
 
     // reCAPTCHA state
+    // The widget renders once the form is near the screen (see mounted),
+    // so Google's script doesn't load for visitors who never scroll down
+    showCaptcha: false,
+    captchaReady: false,
+    captchaLoadFailed: false,
+    // Hint under the widget after a submit without ticking the box
+    captchaRequired: false,
     recaptchaVerified: false,
     recaptchaResponse: '',
 
@@ -91,6 +98,46 @@ export default {
     }
   },
 
+  watch: {
+    /**
+     * Starts the load timer once the reCAPTCHA widget is added to the page
+     */
+    showCaptcha (shown) {
+      if (shown) {
+        this.captchaTimer = setTimeout(() => {
+          if (!this.captchaReady) {
+            this.captchaLoadFailed = true
+          }
+        }, CAPTCHA_LOAD_TIMEOUT)
+      }
+    }
+  },
+
+  // Lifecycle hook - runs after component is mounted to DOM
+  mounted () {
+    // Render the reCAPTCHA widget when the form comes within 600px of the screen
+    // Browsers without IntersectionObserver get it right away
+    if ('IntersectionObserver' in window) {
+      this.captchaObserver = new IntersectionObserver(entries => {
+        if (entries.some(entry => entry.isIntersecting)) {
+          this.showCaptcha = true
+          this.captchaObserver.disconnect()
+        }
+      }, { rootMargin: '600px 0px' })
+      this.captchaObserver.observe(this.$el)
+    } else {
+      this.showCaptcha = true
+    }
+  },
+
+  // Lifecycle hook - runs before component is destroyed
+  beforeDestroy () {
+    if (this.captchaObserver) {
+      this.captchaObserver.disconnect()
+    }
+    clearTimeout(this.captchaTimer)
+  },
+
   methods: {
     /**
      * Formats phone number as user types
@@ -107,12 +154,30 @@ export default {
     },
 
     /**
+     * Called when the reCAPTCHA widget has rendered
+     */
+    onCaptchaRendered () {
+      this.captchaReady = true
+      this.captchaLoadFailed = false
+    },
+
+    /**
+     * Called when reCAPTCHA reports an error, usually a lost connection
+     */
+    onCaptchaError () {
+      this.captchaLoadFailed = true
+    },
+
+    /**
      * Called when reCAPTCHA is successfully completed
-     * Stores the response token and sets verified state
+     * Stores the response token, sets verified state and clears the hints
+     * (reCAPTCHA recovers by itself once a lost connection comes back)
      */
     onCaptchaVerified (response) {
       this.recaptchaVerified = true
       this.recaptchaResponse = response
+      this.captchaRequired = false
+      this.captchaLoadFailed = false
     },
 
     /**
@@ -125,21 +190,36 @@ export default {
     },
 
     /**
+     * Unticks the reCAPTCHA box so the next submission gets a fresh token
+     * (a token can only be verified once)
+     */
+    resetCaptcha () {
+      this.recaptchaVerified = false
+      this.recaptchaResponse = ''
+      if (this.$refs.recaptcha) {
+        this.$refs.recaptcha.reset()
+      }
+    },
+
+    /**
      * Validates and submits the form
      * Sends email via EmailJS if validation passes
      */
     async submitForm () {
       // Validate form using Vuetify's validate method
-      // this.$refs.form is reference to v-form component
-      const isValid = this.$refs.form.validate()
-
-      if (!isValid || !this.recaptchaVerified) {
-        // If validation fails, stop here
-        // Error messages will display automatically under fields
-        if (!this.recaptchaVerified) {
-          this.showError = true
-          this.errorMessage = 'Please verify you are not a robot.'
+      // This also shows the error message under every field that needs fixing
+      if (!this.$refs.form.validate()) {
+        // Move focus to the first field that needs fixing
+        const firstInvalid = this.$refs.form.inputs.find(input => input.hasError)
+        if (firstInvalid) {
+          firstInvalid.focus()
         }
+        return
+      }
+
+      if (!this.recaptchaVerified) {
+        // Show the hint under the reCAPTCHA box; ticking the box clears it
+        this.captchaRequired = true
         return
       }
 
@@ -153,12 +233,14 @@ export default {
       try {
         // Prepare template parameters for EmailJS
         // These variable names must match your EmailJS template
+        // The recipient is set in the EmailJS template itself, not here
         const templateParams = {
           from_name: this.formData.name, // Customer name
           reply_to: this.formData.email, // Customer email
           phone_number: this.formData.phone, // Customer phone
           message: this.formData.message || 'No additional details provided', // Quote details
-          to_email: 'cambizz10@gmail.com' // Your business email (can be hardcoded in template)
+          // reCAPTCHA token; EmailJS checks it when reCAPTCHA is enabled in the template settings
+          'g-recaptcha-response': this.recaptchaResponse
         }
 
         // Send email using EmailJS
@@ -174,8 +256,9 @@ export default {
           // Show success message
           this.showSuccess = true
 
-          // Reset form fields after successful submission
+          // Reset form fields and the reCAPTCHA box after successful submission
           this.$refs.form.reset()
+          this.resetCaptcha()
 
           // Scroll to top of form so user sees success message
           this.$el.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -189,8 +272,14 @@ export default {
         /* eslint-disable-next-line no-console */
         console.error('EmailJS Error:', error)
         // Show error message to user
+        // 429 comes from limitRate in main.js: this browser sent a request moments ago
         this.showError = true
-        this.errorMessage = `Sorry, there was a problem sending your request. Please call us directly at ${this.businessPhoneDisplay}.`
+        this.errorMessage = error && error.status === 429
+          ? 'Please wait a few seconds before sending another request.'
+          : `Sorry, there was a problem sending your request. Please call us directly at ${this.businessPhoneDisplay}.`
+
+        // The token was used up by this attempt, so the next one needs a fresh tick
+        this.resetCaptcha()
 
         // Auto-hide error message after 10 seconds
         setTimeout(() => {
@@ -204,22 +293,14 @@ export default {
 
     /**
      * Resets the form to initial state
-     * Clears all fields and validation errors
+     * Clears all fields, validation errors and the reCAPTCHA box
      */
     resetForm () {
-      // Reset form data first
-      this.formData = {
-        name: '',
-        email: '',
-        phone: '',
-        message: ''
-      }
-
-      // Then reset form validation
       this.$refs.form.reset()
+      this.resetCaptcha()
+      this.captchaRequired = false
       this.showSuccess = false
       this.showError = false
-      this.recaptchaVerified = false
     }
   }
 }
@@ -429,11 +510,9 @@ export default {
               FORM ELEMENT
               v-form component with validation
               ref allows access to form methods (validate, reset)
-              v-model syncs with valid data property
             -->
             <v-form
               ref="form"
-              v-model="valid"
               @submit.prevent="submitForm"
             >
               <!--
@@ -448,6 +527,7 @@ export default {
                 outlined
                 :rules="nameRules"
                 required
+                autocomplete="name"
                 prepend-inner-icon="mdi-account"
                 class="mb-4"
                 hint="Enter your full name"
@@ -466,6 +546,7 @@ export default {
                 outlined
                 :rules="emailRules"
                 required
+                autocomplete="email"
                 prepend-inner-icon="mdi-email"
                 class="mb-4"
                 hint="We'll send your quote to this email"
@@ -477,6 +558,7 @@ export default {
                 Required field with US phone format validation
                 Auto-formats as user types via @input event
                 type="tel" shows numeric keyboard on mobile
+                tel-national asks autofill for the number without the +1
               -->
               <v-text-field
                 v-model="formData.phone"
@@ -485,6 +567,7 @@ export default {
                 outlined
                 :rules="phoneRules"
                 required
+                autocomplete="tel-national"
                 prepend-inner-icon="mdi-phone"
                 @input="formatPhoneNumber"
                 class="mb-4"
@@ -514,14 +597,37 @@ export default {
                 placeholder="Example: Craftsman lawn mower won't start. Model number 12345. Last used 2 weeks ago."
               ></v-textarea>
 
-              <!-- reCAPTCHA widget -->
-               <!-- This is Google's test site key -->
-              <div class="my-4 text-center">
+              <!--
+                reCAPTCHA WIDGET
+                Rendered once the form is near the screen (see mounted)
+                Local development uses Google's test key; builds use VUE_APP_RECAPTCHA_SITE_KEY
+                role="alert" makes screen readers announce the hints when they appear
+              -->
+              <div class="my-4">
                 <vue-recaptcha
+                  v-if="showCaptcha"
+                  ref="recaptcha"
                   :sitekey="recaptchaSiteKey"
+                  @render="onCaptchaRendered"
                   @verify="onCaptchaVerified"
                   @expired="onCaptchaExpired"
+                  @error="onCaptchaError"
                 />
+                <p
+                  v-if="captchaRequired"
+                  class="text-body-1 error--text font-weight-medium mt-2 mb-0"
+                  role="alert"
+                >
+                  Please tick "I'm not a robot" before sending.
+                </p>
+                <p
+                  v-if="captchaLoadFailed"
+                  class="text-body-1 error--text font-weight-medium mt-2 mb-0"
+                  role="alert"
+                >
+                  The spam check couldn't load, so the form can't be sent right now.
+                  Please call us at <a :href="'tel:' + businessPhone">{{ businessPhoneDisplay }}</a>.
+                </p>
               </div>
 
               <!--
@@ -539,7 +645,7 @@ export default {
               <v-row justify="center">
                 <!--
                   SUBMIT BUTTON
-                  Disabled while loading or form invalid
+                  Disabled only while sending, so clicking it can point out missing fields
                   Shows loading spinner during submission
                 -->
                 <v-col cols="12" md="8" lg="6">
@@ -548,7 +654,7 @@ export default {
                     color="accent"
                     x-large
                     block
-                    :disabled="!valid || loading"
+                    :disabled="loading"
                     :loading="loading"
                     class="submit-btn"
                   >
@@ -580,6 +686,14 @@ export default {
                   </v-btn>
                 </v-col>
               </v-row>
+
+              <!--
+                PRIVACY NOTE
+                Tells customers what happens to the details they send
+              -->
+              <p class="text-body-1 grey--text text--darken-2 text-center mt-4 mb-0">
+                We only use your details to reply to your quote request.
+              </p>
             </v-form>
 
             <!--
