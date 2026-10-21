@@ -1,4 +1,5 @@
 const { defineConfig } = require('@vue/cli-service')
+const business = require('./src/config/business')
 
 /**
  * Vue CLI configuration for Southern and Sons Small Engine Repair website
@@ -19,6 +20,44 @@ if (process.env.NODE_ENV === 'production') {
   if (missing.length) {
     throw new Error(`Missing ${missing.join(', ')}. Add them to .env (local builds) or the repository variables (GitHub Actions).`)
   }
+}
+
+/**
+ * Schema.org LocalBusiness data for search engines, built from the business
+ * config and inserted into public/index.html
+ * @returns {string} JSON for the <script type="application/ld+json"> block
+ */
+function structuredData () {
+  const { phone, address, hours } = business
+  const data = {
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    name: business.legalName,
+    url: `${business.siteUrl}/`,
+    image: `${business.siteUrl}/og-image.png`,
+    telephone: `+1-${phone.slice(0, 3)}-${phone.slice(3, 6)}-${phone.slice(6)}`,
+    email: business.email,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: address.street,
+      addressLocality: address.city,
+      addressRegion: address.state,
+      addressCountry: 'US'
+    },
+    areaServed: business.serviceArea,
+    openingHoursSpecification: [{
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+      opens: hours.open,
+      closes: hours.close
+    }],
+    sameAs: [business.facebookUrl]
+  }
+  if (business.foundedYear) {
+    data.foundingDate = String(business.foundedYear)
+  }
+  // Escape "<" so no value can close the <script> tag early
+  return JSON.stringify(data).replace(/</g, '\\u003c')
 }
 
 module.exports = defineConfig({
@@ -84,6 +123,10 @@ module.exports = defineConfig({
   chainWebpack: config => {
     // HTML optimization
     config.plugin('html').tap(args => {
+      // Values public/index.html reads as htmlWebpackPlugin.options.*
+      args[0].business = business
+      args[0].structuredData = structuredData()
+
       args[0].minify = {
         removeComments: true,
         collapseWhitespace: true,

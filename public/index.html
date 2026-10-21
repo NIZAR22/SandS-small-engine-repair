@@ -3,32 +3,32 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Southern and Sons Small Engine Repair</title>
     <meta name="description" content="Professional small engine repair services in Brevard County, Florida. Expert repair for lawn mowers, generators, chainsaws, and more.">
+
+    <!-- Icons for browser tabs and phone home screens -->
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico" sizes="16x16 32x32 48x48">
+    <link rel="apple-touch-icon" href="<%= BASE_URL %>apple-touch-icon.png">
+
+    <!-- Link previews on Facebook, in text messages and on other sites -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="<%- htmlWebpackPlugin.options.business.legalName %>">
+    <meta property="og:title" content="Southern and Sons Small Engine Repair">
+    <meta property="og:description" content="Professional small engine repair services in Brevard County, Florida. Expert repair for lawn mowers, generators, chainsaws, and more.">
+    <meta property="og:url" content="<%- htmlWebpackPlugin.options.business.siteUrl %>/">
+    <meta property="og:image" content="<%- htmlWebpackPlugin.options.business.siteUrl %>/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Business details for search engines (Schema.org), generated from src/config/business.js -->
+    <script type="application/ld+json"><%= htmlWebpackPlugin.options.structuredData %></script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css" rel="stylesheet">
-    <title>Southern and Sons Small Engine Repair</title>
-    
-    <!-- Cloudflare Analytics with error handling -->
-    <script defer>
-      window.addEventListener('load', function() {
-        // Only load analytics in production
-        if (window.location.hostname !== 'localhost') {
-          try {
-            const script = document.createElement('script');
-            script.defer = true;
-            script.src = 'https://static.cloudflareinsights.com/beacon.min.js';
-            script.onerror = function() {
-              console.warn('Analytics failed to load');
-            };
-            document.body.appendChild(script);
-          } catch (e) {
-            console.warn('Analytics initialization failed');
-          }
-        }
-      });
-    </script>
+    <!-- Icon font pinned to one version; the browser refuses the file if its contents ever change -->
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css" rel="stylesheet" integrity="sha384-HphS8cQyN+eYiJ5PMbzShG6qZdRtvHPVLPkYb8JwMkmNgaIxrFVDhQe3jIbq3EZ2" crossorigin="anonymous">
   </head>
   <body>
     <div id="app"></div>
