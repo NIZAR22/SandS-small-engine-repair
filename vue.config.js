@@ -4,24 +4,36 @@ const { defineConfig } = require('@vue/cli-service')
  * Vue CLI configuration for Southern and Sons Small Engine Repair website
  * Optimized for production deployment with performance and SEO considerations
  */
-module.exports = defineConfig({
-  // Transpile dependencies for Vuetify and other packages
-  transpileDependencies: [
-    'vuetify'
-  ],
 
+// The quote form needs these at build time: from .env for local builds,
+// from repository variables in GitHub Actions. A production build without them
+// would ship a form that can't send, so stop the build instead.
+const requiredEnv = [
+  'VUE_APP_EMAILJS_PUBLIC_KEY',
+  'VUE_APP_EMAILJS_SERVICE_ID',
+  'VUE_APP_EMAILJS_TEMPLATE_ID',
+  'VUE_APP_RECAPTCHA_SITE_KEY'
+]
+if (process.env.NODE_ENV === 'production') {
+  const missing = requiredEnv.filter(name => !process.env[name])
+  if (missing.length) {
+    throw new Error(`Missing ${missing.join(', ')}. Add them to .env (local builds) or the repository variables (GitHub Actions).`)
+  }
+}
+
+module.exports = defineConfig({
   // Production build configuration
   publicPath: '/',
-  
+
   // Output directory for production build
   outputDir: 'dist',
-  
+
   // Assets directory
   assetsDir: 'assets',
-  
+
   // Enable source maps for debugging (disabled in production for security)
   productionSourceMap: false,
-  
+
   // Configure webpack for optimization
   configureWebpack: {
     // Performance optimizations
@@ -55,113 +67,21 @@ module.exports = defineConfig({
       hints: 'warning',
       maxEntrypointSize: 512000,
       maxAssetSize: 512000
-    },
-    
-    // Resolve configuration for better module resolution
-    resolve: {
-      alias: {
-        '@': require('path').resolve(__dirname, 'src')
-      }
-    }
-  },
-
-  // CSS configuration
-  css: {
-    // Extract CSS for better caching
-    extract: process.env.NODE_ENV === 'production',
-    loaderOptions: {
-      sass: {
-        implementation: require('sass'),
-        sassOptions: {
-          fiber: false,
-          indentedSyntax: true,
-          outputStyle: 'compressed'
-        }
-      }
     }
   },
 
   // Development server configuration
   devServer: {
-    // Enable HTTPS for local development
-    https: false,
-    
     // Host configuration
     host: 'localhost',
     port: 8080,
-    
-    // Open browser automatically
-    open: true,
-    
-    // Hot module replacement
-    hot: true,
-    
-    // CORS configuration
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
-      'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization'
-    }
-  },
 
-  // PWA configuration (if needed in future)
-  // pwa: {
-  //   name: 'Southern and Sons Small Engine Repair',
-  //   themeColor: '#1976D2',
-  //   msTileColor: '#1976D2',
-  //   appleMobileWebAppCapable: 'yes',
-  //   appleMobileWebAppStatusBarStyle: 'default',
-  //   manifestOptions: {
-  //     background_color: '#FFFFFF',
-  //     display: 'standalone',
-  //     orientation: 'portrait'
-  //   }
-  // },
+    // Open browser automatically
+    open: true
+  },
 
   // Chain webpack for additional optimizations
   chainWebpack: config => {
-    // Optimize images
-    config.module
-      .rule('images')
-      .test(/\.(gif|png|jpe?g|svg)$/i)
-      .use('image-webpack-loader')
-      .loader('image-webpack-loader')
-      .options({
-        mozjpeg: {
-          progressive: true,
-          quality: 80
-        },
-        optipng: {
-          enabled: true
-        },
-        pngquant: {
-          quality: [0.65, 0.90],
-          speed: 4
-        },
-        gifsicle: {
-          interlaced: false
-        },
-        webp: {
-          quality: 80
-        }
-      })
-
-    // Optimize fonts
-    config.module
-      .rule('fonts')
-      .test(/\.(woff2?|eot|ttf|otf)(\?.*)?$/i)
-      .use('url-loader')
-      .loader('url-loader')
-      .options({
-        limit: 4096,
-        fallback: {
-          loader: 'file-loader',
-          options: {
-            name: 'fonts/[name].[hash:8].[ext]'
-          }
-        }
-      })
-
     // HTML optimization
     config.plugin('html').tap(args => {
       args[0].minify = {
@@ -179,26 +99,12 @@ module.exports = defineConfig({
 
     // Performance optimizations
     if (process.env.NODE_ENV === 'production') {
-      // Remove console logs in production
+      // Strip console.log/info/debug in production but keep console.error and console.warn,
+      // so a failed quote submission still leaves a trace in the browser console
       config.optimization.minimizer('terser').tap(args => {
-        args[0].terserOptions.compress.drop_console = true
+        args[0].terserOptions.compress.pure_funcs = ['console.log', 'console.info', 'console.debug']
         return args
       })
-    }
-  },
-
-  // Plugin options
-  pluginOptions: {
-    // Vuetify plugin options
-    vuetify: {
-      theme: {
-        themes: {
-          light: {
-            primary: '#1976D2',
-            accent: '#F57C00'
-          }
-        }
-      }
     }
   }
 })

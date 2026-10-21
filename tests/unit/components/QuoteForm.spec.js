@@ -27,25 +27,25 @@ describe('QuoteForm.vue', () => {
   it('validates form fields on submit', async () => {
     const wrapper = mountComponent()
     const form = wrapper.find('form')
-    
+
     await form.trigger('submit.prevent')
     expect(wrapper.vm.valid).toBe(false)
   })
 
   it('formats phone number correctly', async () => {
     const wrapper = mountComponent()
-    
+
     await wrapper.setData({
       formData: { phone: '1234567890' }
     })
     wrapper.vm.formatPhoneNumber()
-    
+
     expect(wrapper.vm.formData.phone).toBe('(123) 456-7890')
   })
 
   it('shows success message after successful submission', async () => {
     const wrapper = mountComponent()
-    
+
     // Set valid form data
     await wrapper.setData({
       formData: {
@@ -63,9 +63,9 @@ describe('QuoteForm.vue', () => {
       validate: () => true,
       reset: jest.fn()
     }
-    
+
     await wrapper.find('form').trigger('submit.prevent')
-    
+
     // Verify emailjs.send was called
     expect(emailjs.send).toHaveBeenCalledWith(
       wrapper.vm.emailConfig.serviceId,
@@ -74,10 +74,10 @@ describe('QuoteForm.vue', () => {
         to_email: 'cambizz10@gmail.com'
       })
     )
-    
+
     // Wait for the next tick to allow promises to resolve
     await wrapper.vm.$nextTick()
-    
+
     expect(wrapper.vm.showSuccess).toBe(true)
   })
 })

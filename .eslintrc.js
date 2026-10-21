@@ -17,5 +17,14 @@ module.exports = {
   rules: {
     // Allow console.log during development, warn in production builds
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off'
-  }
+  },
+  // Unit tests run under Jest, which provides describe/it/expect/jest as globals
+  overrides: [
+    {
+      files: ['tests/**/*.js'],
+      env: {
+        jest: true
+      }
+    }
+  ]
 }

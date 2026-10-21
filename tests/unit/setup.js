@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Vuetify from 'vuetify'
-import emailjs from '@emailjs/browser'
 
 // Mock EmailJS
 jest.mock('@emailjs/browser', () => ({
@@ -10,5 +9,6 @@ jest.mock('@emailjs/browser', () => ({
 
 Vue.use(Vuetify)
 
-// Mock window.scrollTo for tests
+// jsdom doesn't implement scrolling; mock the APIs the components call
 window.scrollTo = jest.fn()
+Element.prototype.scrollIntoView = jest.fn()
