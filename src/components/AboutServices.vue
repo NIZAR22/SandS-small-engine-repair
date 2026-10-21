@@ -297,8 +297,7 @@ export default {
               cover
             >
               <!--
-                Gradient overlay on image for visual interest
-                Adds depth and makes image blend with design
+                Loading spinner shown until the photo has loaded
               -->
               <template v-slot:placeholder>
                 <v-row

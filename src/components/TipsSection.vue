@@ -11,7 +11,6 @@ export default {
 
     // Array of maintenance tips
     // Each tip has title, description, icon, and category
-    // TODO: Replace with actual maintenance tips specific to small engines
     maintenanceTips: [
       {
         title: 'Check Oil Regularly',
