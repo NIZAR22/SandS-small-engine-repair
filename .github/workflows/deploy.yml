@@ -1,5 +1,5 @@
 # Builds the site and publishes dist/ to the gh-pages branch, which GitHub Pages
-# serves at sands.madebysadegh.work (public/CNAME is copied into the build).
+# serves at www.southernandsons.com (public/CNAME is copied into the build).
 #
 # Needs four repository variables (Settings > Secrets and variables > Actions > Variables):
 # VUE_APP_EMAILJS_PUBLIC_KEY, VUE_APP_EMAILJS_SERVICE_ID, VUE_APP_EMAILJS_TEMPLATE_ID and

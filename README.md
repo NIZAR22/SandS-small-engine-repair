@@ -1,6 +1,6 @@
 # Southern and Sons Small Engine Repair Website
 
-A professional, senior-friendly single-page website for Southern and Sons Small Engine Repair, LLC built with Vue.js 2.7, Vuetify 2.6, and EmailJS. Live at [sands.madebysadegh.work](https://sands.madebysadegh.work).
+A professional, senior-friendly single-page website for Southern and Sons Small Engine Repair, LLC built with Vue.js 2.7, Vuetify 2.6, and EmailJS. Live at [www.southernandsons.com](https://www.southernandsons.com).
 
 ## 🚀 Features
 
@@ -127,7 +127,7 @@ These values end up in the public JavaScript, so they are identifiers, not secre
 
 ### reCAPTCHA
 
-- Register a reCAPTCHA **v2 "I'm not a robot"** key for `sands.madebysadegh.work` and put its site key in `VUE_APP_RECAPTCHA_SITE_KEY`.
+- Register a reCAPTCHA **v2 "I'm not a robot"** key for `southernandsons.com` (this also covers `www`) and put its site key in `VUE_APP_RECAPTCHA_SITE_KEY`.
 - `npm run serve` uses Google's public test key, which works on localhost. Once verification is on in EmailJS, test requests sent from your machine are rejected, because test-key tokens don't match your secret key. Test sending on the live site.
 
 ### Styling
@@ -178,7 +178,7 @@ The website is fully responsive with breakpoints:
 
 ## 🚀 Deployment
 
-Pushing to `main` deploys the site. The GitHub Actions workflow (`.github/workflows/deploy.yml`) installs dependencies, runs lint and unit tests, builds, and publishes `dist/` to the `gh-pages` branch, which GitHub Pages serves at `sands.madebysadegh.work` (the custom domain comes from `public/CNAME`).
+Pushing to `main` deploys the site. The GitHub Actions workflow (`.github/workflows/deploy.yml`) installs dependencies, runs lint and unit tests, builds, and publishes `dist/` to the `gh-pages` branch, which GitHub Pages serves at `www.southernandsons.com` (the custom domain comes from `public/CNAME`).
 
 **One-time setup**: In the GitHub repository, go to Settings → Secrets and variables → Actions → Variables and add the four `VUE_APP_*` values from your `.env`.
 

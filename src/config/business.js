@@ -8,7 +8,7 @@
 module.exports = Object.freeze({
   name: 'Southern and Sons',
   legalName: 'Southern and Sons Small Engine Repair, LLC',
-  siteUrl: 'https://sands.madebysadegh.work',
+  siteUrl: 'https://www.southernandsons.com',
 
   // Digits only; formatPhone() turns it into (321) 345-1480 for display
   phone: '3213451480',
@@ -30,5 +30,5 @@ module.exports = Object.freeze({
   }),
 
   // Year the business opened; when set, the footer reads "since <year>"
-  foundedYear: null
+  foundedYear: 2025
 })
