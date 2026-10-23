@@ -4,7 +4,6 @@
 import HeroSection from './components/HeroSection.vue'
 import AboutServices from './components/AboutServices.vue'
 import TipsSection from './components/TipsSection.vue'
-import QuoteForm from './components/QuoteForm.vue'
 import ContactSection from './components/ContactSection.vue'
 import AppFooter from './components/Footer.vue'
 import business from './config/business'
@@ -18,7 +17,6 @@ export default {
     HeroSection,
     AboutServices,
     TipsSection,
-    QuoteForm,
     ContactSection,
     AppFooter
   },
@@ -52,11 +50,6 @@ export default {
         id: 'tips',
         title: 'Tips',
         icon: 'mdi-lightbulb-on'
-      },
-      {
-        id: 'quote',
-        title: 'Get Quote',
-        icon: 'mdi-file-document-edit'
       },
       {
         id: 'contact',
@@ -482,24 +475,19 @@ section {
         Sections are imported and registered in the components object below
       -->
 
-      <!-- Hero Section - Top of page with logo and main CTAs -->
+      <!-- Hero Section - Top of page with logo and call button -->
       <section id="hero">
-        <HeroSection @scroll-to="scrollToSection" />
+        <HeroSection />
       </section>
 
       <!-- About/Services Section - What we repair and service area -->
       <section id="services">
-        <AboutServices @scroll-to-quote="scrollToSection('quote')" />
+        <AboutServices />
       </section>
 
       <!-- Tips Section - DIY maintenance advice -->
       <section id="tips">
-        <TipsSection @scroll-to-quote="scrollToSection('quote')" />
-      </section>
-
-      <!-- Quote Form Section - Contact form with EmailJS -->
-      <section id="quote">
-        <QuoteForm />
+        <TipsSection />
       </section>
 
       <!-- Contact Section - Hours, phone, email, location -->

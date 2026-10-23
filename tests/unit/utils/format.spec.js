@@ -1,4 +1,4 @@
-import { formatPhone, formatPhoneInput, formatTime, formatHours, splitEmail } from '@/utils/format'
+import { formatPhone, formatTime, formatHours, splitEmail } from '@/utils/format'
 
 describe('formatPhone', () => {
   it('formats 10 digits for display', () => {
@@ -7,28 +7,6 @@ describe('formatPhone', () => {
 
   it('returns anything that is not 10 digits unchanged', () => {
     expect(formatPhone('12345')).toBe('12345')
-  })
-})
-
-describe('formatPhoneInput', () => {
-  it.each([
-    ['3', '(3'],
-    ['321', '(321) '],
-    ['3213', '(321) 3'],
-    ['321345', '(321) 345-'],
-    ['3213451480', '(321) 345-1480'],
-    ['(321) 345-1480', '(321) 345-1480'],
-    ['32134514809', '(321) 345-1480'],
-    ['+1 (321) 345-1480', '(321) 345-1480'],
-    ['13213451480', '(321) 345-1480'],
-    ['1-321', '(321) ']
-  ])('formats %s as %s', (input, expected) => {
-    expect(formatPhoneInput(input)).toBe(expected)
-  })
-
-  it('leaves input without digits unchanged', () => {
-    expect(formatPhoneInput('abc')).toBe('abc')
-    expect(formatPhoneInput('')).toBe('')
   })
 })
 

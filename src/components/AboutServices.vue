@@ -61,7 +61,7 @@ export default {
       {
         icon: 'mdi-cash-check',
         title: 'Fair Pricing',
-        description: 'Competitive rates with free estimates on all repairs'
+        description: 'Competitive, upfront rates on all repairs'
       },
       {
         icon: 'mdi-shield-check',
@@ -69,17 +69,7 @@ export default {
         description: 'All repairs backed by our satisfaction guarantee'
       }
     ]
-  }),
-
-  methods: {
-    /**
-     * Scrolls to the quote form section
-     * Emits event to parent component to handle scroll
-     */
-    scrollToQuote () {
-      this.$emit('scroll-to-quote')
-    }
-  }
+  })
 }
 </script>
 
@@ -174,26 +164,6 @@ export default {
 .benefit-item {
   padding: 20px;
   text-align: center;
-}
-
-/*
-  CTA button styling
-  Extra large, prominent button with animation
-*/
-.cta-btn {
-  min-height: 70px !important;
-  font-size: 1.25rem !important;
-  letter-spacing: 0.5px;
-  transition: all 0.3s ease;
-}
-
-/*
-  CTA button hover effect
-  Lifts button and adds stronger shadow
-*/
-.cta-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3) !important;
 }
 
 /*
@@ -504,28 +474,6 @@ export default {
               </div>
             </v-col>
           </v-row>
-        </v-col>
-      </v-row>
-
-      <!--
-        CALL-TO-ACTION BUTTON
-        Encourages users to request a quote
-        Large, prominent button with accent color
-      -->
-      <v-row justify="center" class="mt-12">
-        <v-col cols="12" sm="8" md="6" lg="4">
-          <v-btn
-            color="accent"
-            x-large
-            block
-            depressed
-            @click="scrollToQuote"
-            class="cta-btn py-7"
-            elevation="4"
-          >
-            <v-icon left large>mdi-file-document-edit</v-icon>
-            <span class="text-h6 font-weight-bold">Get Your Free Quote</span>
-          </v-btn>
         </v-col>
       </v-row>
     </v-container>

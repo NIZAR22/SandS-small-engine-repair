@@ -6,22 +6,6 @@ const business = require('./src/config/business')
  * Optimized for production deployment with performance and SEO considerations
  */
 
-// The quote form needs these at build time: from .env for local builds,
-// from repository variables in GitHub Actions. A production build without them
-// would ship a form that can't send, so stop the build instead.
-const requiredEnv = [
-  'VUE_APP_EMAILJS_PUBLIC_KEY',
-  'VUE_APP_EMAILJS_SERVICE_ID',
-  'VUE_APP_EMAILJS_TEMPLATE_ID',
-  'VUE_APP_RECAPTCHA_SITE_KEY'
-]
-if (process.env.NODE_ENV === 'production') {
-  const missing = requiredEnv.filter(name => !process.env[name])
-  if (missing.length) {
-    throw new Error(`Missing ${missing.join(', ')}. Add them to .env (local builds) or the repository variables (GitHub Actions).`)
-  }
-}
-
 /**
  * Schema.org LocalBusiness data for search engines, built from the business
  * config and inserted into public/index.html
@@ -143,7 +127,7 @@ module.exports = defineConfig({
     // Performance optimizations
     if (process.env.NODE_ENV === 'production') {
       // Strip console.log/info/debug in production but keep console.error and console.warn,
-      // so a failed quote submission still leaves a trace in the browser console
+      // so unexpected errors still leave a trace in the browser console
       config.optimization.minimizer('terser').tap(args => {
         args[0].terserOptions.compress.pure_funcs = ['console.log', 'console.info', 'console.debug']
         return args

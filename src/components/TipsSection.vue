@@ -49,17 +49,7 @@ export default {
         category: 'Seasonal Care'
       }
     ]
-  }),
-
-  methods: {
-    /**
-     * Emits event to scroll to quote section
-     * Parent component will handle the actual scrolling
-     */
-    scrollToQuote () {
-      this.$emit('scroll-to-quote')
-    }
-  }
+  })
 }
 </script>
 
@@ -322,8 +312,7 @@ export default {
 
       <!--
         CALL-TO-ACTION SECTION
-        Encourages users to request professional service
-        Two buttons: Request Quote and Call Now
+        Encourages users to call for professional service
       -->
       <v-row justify="center" class="mt-12">
         <v-col cols="12" class="text-center mb-6">
@@ -337,28 +326,6 @@ export default {
       </v-row>
 
       <v-row justify="center">
-        <!-- Request Quote Button -->
-        <v-col
-          cols="12"
-          sm="6"
-          md="5"
-          lg="4"
-          class="px-2"
-        >
-          <v-btn
-            color="accent"
-            x-large
-            block
-            depressed
-            @click="scrollToQuote"
-            class="tips-cta-btn py-7"
-            elevation="4"
-          >
-            <v-icon left large>mdi-file-document-edit</v-icon>
-            <span class="text-h6 font-weight-bold">Request a Quote</span>
-          </v-btn>
-        </v-col>
-
         <!-- Call Now Button -->
         <v-col
           cols="12"
@@ -368,7 +335,7 @@ export default {
           class="px-2"
         >
           <v-btn
-            color="primary"
+            color="accent"
             x-large
             block
             depressed

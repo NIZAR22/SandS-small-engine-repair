@@ -1,10 +1,5 @@
 # Builds the site and publishes dist/ to the gh-pages branch, which GitHub Pages
 # serves at www.southernandsons.com (public/CNAME is copied into the build).
-#
-# Needs four repository variables (Settings > Secrets and variables > Actions > Variables):
-# VUE_APP_EMAILJS_PUBLIC_KEY, VUE_APP_EMAILJS_SERVICE_ID, VUE_APP_EMAILJS_TEMPLATE_ID and
-# VUE_APP_RECAPTCHA_SITE_KEY. They end up in the public JavaScript anyway, so they're
-# variables rather than secrets. The build stops if any is missing (see vue.config.js).
 name: Deploy
 
 on:
@@ -35,13 +30,7 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npm run test:unit
-
       - run: npm run build
-        env:
-          VUE_APP_EMAILJS_PUBLIC_KEY: ${{ vars.VUE_APP_EMAILJS_PUBLIC_KEY }}
-          VUE_APP_EMAILJS_SERVICE_ID: ${{ vars.VUE_APP_EMAILJS_SERVICE_ID }}
-          VUE_APP_EMAILJS_TEMPLATE_ID: ${{ vars.VUE_APP_EMAILJS_TEMPLATE_ID }}
-          VUE_APP_RECAPTCHA_SITE_KEY: ${{ vars.VUE_APP_RECAPTCHA_SITE_KEY }}
 
       # Replaces the branch contents with dist/ (clearing old files) and adds .nojekyll
       - uses: peaceiris/actions-gh-pages@84c30a85c19949d7eee79c4ff27748b70285e453 # v4.1.0

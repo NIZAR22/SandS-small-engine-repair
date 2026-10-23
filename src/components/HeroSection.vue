@@ -22,19 +22,6 @@ export default {
     formattedPhoneNumber () {
       return formatPhone(this.phoneNumber)
     }
-  },
-
-  methods: {
-    /**
-     * Emits event to parent component (App.vue) to scroll to quote section
-     * Using emit pattern keeps components decoupled and reusable
-     * Parent handles the actual scrolling logic
-     */
-    scrollToQuote () {
-      // Emit custom event with section id as payload
-      // App.vue listens for this event and performs scroll
-      this.$emit('scroll-to', 'quote')
-    }
   }
 }
 </script>
@@ -411,21 +398,19 @@ export default {
             </p>
 
             <!--
-              CALL-TO-ACTION BUTTONS
-              Two primary actions: Request Quote and Call Now
-              Large buttons with high contrast colors for visibility
+              CALL-TO-ACTION BUTTON
+              Large button with high contrast colors for visibility
             -->
             <v-row
               justify="center"
               class="mt-8"
             >
               <!--
-                REQUEST QUOTE BUTTON
-                Primary CTA - drives to quote form
+                CALL NOW BUTTON
+                Main CTA - direct phone call
                 Orange accent color makes it stand out
                 x-large size for senior-friendly clicking
-                depressed removes button shadow for flat modern look
-                @click emits event to parent (App.vue) to scroll to quote section
+                href with tel: link opens phone dialer on mobile
               -->
               <v-col
                 cols="12"
@@ -436,34 +421,6 @@ export default {
               >
                 <v-btn
                   color="accent"
-                  x-large
-                  block
-                  depressed
-                  @click="scrollToQuote"
-                  class="hero-cta-btn py-7"
-                  elevation="4"
-                >
-                  <v-icon left large>mdi-file-document-edit</v-icon>
-                  <span class="text-h6 font-weight-bold">Request a Quote</span>
-                </v-btn>
-              </v-col>
-
-              <!--
-                CALL NOW BUTTON
-                Secondary CTA - direct phone call
-                Primary blue color for trust
-                href with tel: link opens phone dialer on mobile
-                Especially important for senior users who prefer calling
-              -->
-              <v-col
-                cols="12"
-                sm="6"
-                md="5"
-                lg="4"
-                class="px-2"
-              >
-                <v-btn
-                  color="primary"
                   x-large
                   block
                   depressed
