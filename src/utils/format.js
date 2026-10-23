@@ -1,5 +1,6 @@
 /**
- * Display formatting shared by the page sections
+ * Display formatting shared by the page sections and vue.config.js
+ * (CommonJS so the build config can use it too)
  */
 
 /**
@@ -8,7 +9,7 @@
  * @param {string} digits - Phone number, digits only
  * @returns {string} Formatted phone number, or the input unchanged if it isn't 10 digits
  */
-export function formatPhone (digits) {
+function formatPhone (digits) {
   const match = String(digits).replace(/\D/g, '').match(/^(\d{3})(\d{3})(\d{4})$/)
   return match ? `(${match[1]}) ${match[2]}-${match[3]}` : String(digits)
 }
@@ -19,7 +20,7 @@ export function formatPhone (digits) {
  * @param {string} email - Email address
  * @returns {string[]} [name, '@domain']
  */
-export function splitEmail (email) {
+function splitEmail (email) {
   const at = email.indexOf('@')
   return at > 0 ? [email.slice(0, at), email.slice(at)] : [email, '']
 }
@@ -30,7 +31,7 @@ export function splitEmail (email) {
  * @param {string} time - Time as HH:MM
  * @returns {string} Time with AM/PM
  */
-export function formatTime (time) {
+function formatTime (time) {
   const [hours, minutes] = time.split(':').map(Number)
   const suffix = hours < 12 ? 'AM' : 'PM'
   return `${hours % 12 || 12}:${String(minutes).padStart(2, '0')} ${suffix}`
@@ -41,6 +42,8 @@ export function formatTime (time) {
  * @param {{ open: string, close: string }} hours - Opening and closing time as HH:MM
  * @returns {string} e.g. 8:00 AM - 6:00 PM
  */
-export function formatHours ({ open, close }) {
+function formatHours ({ open, close }) {
   return `${formatTime(open)} - ${formatTime(close)}`
 }
+
+module.exports = { formatPhone, splitEmail, formatTime, formatHours }

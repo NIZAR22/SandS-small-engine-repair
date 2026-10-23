@@ -384,7 +384,7 @@ export default {
               mb-8 adds larger spacing before buttons
             -->
             <p class="text-h5 white--text mb-8 hero-tagline">
-              Professional & Reliable Small Engine Repair in Brevard County
+              Professional & Reliable Small Engine Repair in Palm Bay & Brevard County
             </p>
 
             <!--

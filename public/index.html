@@ -5,8 +5,11 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <!-- Brand navy-purple for the browser address bar on phones -->
     <meta name="theme-color" content="#29234F">
-    <title>Southern and Sons Small Engine Repair</title>
-    <meta name="description" content="Professional small engine repair services in Brevard County, Florida. Expert repair for lawn mowers, generators, chainsaws, and more.">
+    <!-- Title and description: what search results show; the location helps local searches -->
+    <title>Small Engine Repair in Palm Bay, FL | Southern and Sons</title>
+    <meta name="description" content="Family-owned small engine repair in Palm Bay, FL, serving all of Brevard County. Lawn mowers, generators, chainsaws and more. Call <%- htmlWebpackPlugin.options.noscriptDetails.phone %>.">
+    <!-- The one official address of this page (https, www) for search engines -->
+    <link rel="canonical" href="<%- htmlWebpackPlugin.options.business.siteUrl %>/">
 
     <!-- Icons for browser tabs and phone home screens -->
     <link rel="icon" href="<%= BASE_URL %>favicon.ico" sizes="16x16 32x32 48x48">
@@ -16,7 +19,7 @@
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="<%- htmlWebpackPlugin.options.business.legalName %>">
     <meta property="og:title" content="Southern and Sons Small Engine Repair">
-    <meta property="og:description" content="Professional small engine repair services in Brevard County, Florida. Expert repair for lawn mowers, generators, chainsaws, and more.">
+    <meta property="og:description" content="Family-owned small engine repair in Palm Bay, FL, serving all of Brevard County. Lawn mowers, generators, chainsaws and more. Call <%- htmlWebpackPlugin.options.noscriptDetails.phone %>.">
     <meta property="og:url" content="<%- htmlWebpackPlugin.options.business.siteUrl %>/">
     <meta property="og:image" content="<%- htmlWebpackPlugin.options.business.siteUrl %>/og-image.png">
     <meta property="og:image:width" content="1200">
@@ -33,6 +36,17 @@
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css" rel="stylesheet" integrity="sha384-HphS8cQyN+eYiJ5PMbzShG6qZdRtvHPVLPkYb8JwMkmNgaIxrFVDhQe3jIbq3EZ2" crossorigin="anonymous">
   </head>
   <body>
+    <!--
+      Shown only when JavaScript is off: the key details, for visitors and
+      for crawlers that don't run JavaScript (generated from src/config/business.js)
+    -->
+    <noscript>
+      <h1><%- htmlWebpackPlugin.options.business.legalName %></h1>
+      <p>Honest repairs from our family to yours! Small engine repair in Palm Bay, FL, serving all of Brevard County: lawn mowers, generators, chainsaws, trimmers, leaf blowers and pressure washers.</p>
+      <p>Call <a href="tel:<%- htmlWebpackPlugin.options.business.phone %>"><%- htmlWebpackPlugin.options.noscriptDetails.phone %></a></p>
+      <p><%- htmlWebpackPlugin.options.noscriptDetails.address %></p>
+      <p><%- htmlWebpackPlugin.options.noscriptDetails.hours %></p>
+    </noscript>
     <div id="app"></div>
   </body>
 </html>

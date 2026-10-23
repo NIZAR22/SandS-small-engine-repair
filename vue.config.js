@@ -1,5 +1,6 @@
 const { defineConfig } = require('@vue/cli-service')
 const business = require('./src/config/business')
+const { formatPhone, formatHours } = require('./src/utils/format')
 
 /**
  * Vue CLI configuration for Southern and Sons Small Engine Repair website
@@ -43,6 +44,43 @@ function structuredData () {
   }
   // Escape "<" so no value can close the <script> tag early
   return JSON.stringify(data).replace(/</g, '\\u003c')
+}
+
+/**
+ * Business details for the <noscript> fallback in public/index.html,
+ * shown to visitors and crawlers that don't run JavaScript
+ */
+const noscriptDetails = {
+  phone: formatPhone(business.phone),
+  address: `${business.address.street}, ${business.address.city}, ${business.address.state} ${business.address.zip}`,
+  hours: `Open Monday - Sunday, ${formatHours(business.hours)}, by appointment only`
+}
+
+/**
+ * Webpack plugin that writes robots.txt and sitemap.xml into the build,
+ * using the site address from the business config
+ */
+class SearchEngineFilesPlugin {
+  apply (compiler) {
+    const { RawSource } = compiler.webpack.sources
+    compiler.hooks.thisCompilation.tap('SearchEngineFilesPlugin', compilation => {
+      compilation.hooks.processAssets.tap(
+        { name: 'SearchEngineFilesPlugin', stage: compiler.webpack.Compilation.PROCESS_ASSETS_STAGE_ADDITIONAL },
+        () => {
+          const home = `${business.siteUrl}/`
+          compilation.emitAsset('robots.txt', new RawSource(
+            `User-agent: *\nAllow: /\n\nSitemap: ${business.siteUrl}/sitemap.xml\n`
+          ))
+          compilation.emitAsset('sitemap.xml', new RawSource(
+            '<?xml version="1.0" encoding="UTF-8"?>\n' +
+            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
+            `  <url>\n    <loc>${home}</loc>\n    <lastmod>${new Date().toISOString().slice(0, 10)}</lastmod>\n  </url>\n` +
+            '</urlset>\n'
+          ))
+        }
+      )
+    })
+  }
 }
 
 module.exports = defineConfig({
@@ -91,7 +129,10 @@ module.exports = defineConfig({
       hints: 'warning',
       maxEntrypointSize: 512000,
       maxAssetSize: 512000
-    }
+    },
+
+    // robots.txt and sitemap.xml for search engines
+    plugins: [new SearchEngineFilesPlugin()]
   },
 
   // Development server configuration
@@ -111,6 +152,7 @@ module.exports = defineConfig({
       // Values public/index.html reads as htmlWebpackPlugin.options.*
       args[0].business = business
       args[0].structuredData = structuredData()
+      args[0].noscriptDetails = noscriptDetails
 
       args[0].minify = {
         removeComments: true,

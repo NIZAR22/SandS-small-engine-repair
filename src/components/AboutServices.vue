@@ -211,7 +211,7 @@ export default {
             What We Repair
           </h2>
           <p class="text-h6 grey--text text--darken-2">
-            Professional Small Engine Repair Services in Brevard County, FL
+            Professional Small Engine Repair Services in Palm Bay and Brevard County, FL
           </p>
         </v-col>
       </v-row>
