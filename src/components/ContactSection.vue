@@ -150,9 +150,11 @@ export default {
 
 /*
   Contact item hover effect
-  Subtle color change on hover for interactivity
+  Only on the items that are links (Call Us, Email Us), so the
+  Service Area card doesn't look clickable
 */
-.contact-item:hover {
+a:hover .contact-item,
+a:focus-visible .contact-item {
   background-color: var(--color-primary-tint); /* Faint navy-purple on hover */
   transform: translateY(-4px);
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);

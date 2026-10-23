@@ -95,15 +95,6 @@ export default {
 .service-image-card {
   border-radius: 12px !important; /* Rounded corners */
   overflow: hidden; /* Ensures image respects border radius */
-  transition: transform 0.3s ease; /* Smooth hover animation */
-}
-
-/*
-  Image card hover effect
-  Subtle lift on hover for interactivity
-*/
-.service-image-card:hover {
-  transform: translateY(-8px); /* Lift effect */
 }
 
 /*
@@ -117,44 +108,26 @@ export default {
 /*
   Individual service item styling
   Adds background and padding for card-like appearance
+  No hover effect: the items are information, not links
 */
 .service-item {
-  background-color: white;
+  background-color: var(--color-white);
   border-radius: 8px;
   padding: 16px !important;
-  transition: all 0.3s ease;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow */
-}
-
-/*
-  Service item hover effect
-  Increases shadow and adds slight scale for feedback
-*/
-.service-item:hover {
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15); /* Stronger shadow */
-  transform: translateX(8px); /* Slide right slightly */
 }
 
 /*
   Info card styling
   White cards with rounded corners and consistent spacing
   Equal height ensures aligned grid
+  No hover effect: the cards are information, not links
 */
 .info-card {
   border-radius: 12px !important;
-  transition: all 0.3s ease;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-}
-
-/*
-  Info card hover effect
-  Lifts card and increases shadow on hover
-*/
-.info-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.15) !important;
 }
 
 /*

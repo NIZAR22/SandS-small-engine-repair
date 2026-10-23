@@ -101,6 +101,16 @@ export default {
   max-width: 100%;
 }
 
+/*
+  Plain footer details (the location): laid out like the links,
+  but no underline on hover since there's nothing to click
+*/
+.footer-info {
+  color: var(--color-light);
+  display: inline-flex;
+  align-items: center;
+}
+
 .footer-link:hover span,
 .footer-link:focus-visible span {
   text-decoration: underline;
@@ -233,7 +243,7 @@ export default {
 
           <!-- Location -->
           <div>
-            <div class="footer-link" style="cursor: default;">
+            <div class="footer-info">
               <v-icon class="mr-2 footer-icon">mdi-map-marker</v-icon>
               <span class="text-h6">{{ contact.location }}</span>
             </div>
