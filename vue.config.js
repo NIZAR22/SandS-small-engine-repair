@@ -36,7 +36,7 @@ function structuredData () {
       opens: hours.open,
       closes: hours.close
     }],
-    sameAs: [business.facebookUrl]
+    sameAs: [business.facebookUrl, business.googleReviewsUrl]
   }
   if (business.foundedYear) {
     data.foundingDate = String(business.foundedYear)

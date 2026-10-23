@@ -14,6 +14,8 @@ module.exports = Object.freeze({
   phone: '3213391790',
   email: 'southernandsonspalmbay@gmail.com',
   facebookUrl: 'https://www.facebook.com/profile.php?id=61582473064509',
+  // Google Business Profile (Maps listing with the reviews)
+  googleReviewsUrl: 'https://maps.app.goo.gl/Saau5TDkDFHMgZwb8',
 
   serviceArea: 'Brevard County, FL',
   // Shop location for the map, the directions links and search engines

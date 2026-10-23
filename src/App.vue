@@ -4,6 +4,7 @@
 import HeroSection from './components/HeroSection.vue'
 import AboutServices from './components/AboutServices.vue'
 import TipsSection from './components/TipsSection.vue'
+import ReviewsSection from './components/ReviewsSection.vue'
 import ContactSection from './components/ContactSection.vue'
 import AppFooter from './components/Footer.vue'
 import business from './config/business'
@@ -17,6 +18,7 @@ export default {
     HeroSection,
     AboutServices,
     TipsSection,
+    ReviewsSection,
     ContactSection,
     AppFooter
   },
@@ -50,6 +52,11 @@ export default {
         id: 'tips',
         title: 'Tips',
         icon: 'mdi-lightbulb-on'
+      },
+      {
+        id: 'reviews',
+        title: 'Reviews',
+        icon: 'mdi-star'
       },
       {
         id: 'contact',
@@ -488,6 +495,11 @@ section {
       <!-- Tips Section - DIY maintenance advice -->
       <section id="tips">
         <TipsSection />
+      </section>
+
+      <!-- Reviews Section - Selected Google reviews and a link to all of them -->
+      <section id="reviews">
+        <ReviewsSection />
       </section>
 
       <!-- Contact Section - Hours, phone, email, location -->
