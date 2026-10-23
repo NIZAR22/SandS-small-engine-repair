@@ -233,8 +233,11 @@ export default {
           <p class="text-h6 white--text mb-1">
             Monday - Sunday
           </p>
-          <p class="text-h6 white--text mb-4">
+          <p class="text-h6 white--text mb-1">
             {{ hours }}
+          </p>
+          <p class="text-body-1 white--text mb-4">
+            By appointment only
           </p>
 
           <!-- Social media link -->

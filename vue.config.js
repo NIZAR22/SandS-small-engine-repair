@@ -26,6 +26,7 @@ function structuredData () {
       streetAddress: address.street,
       addressLocality: address.city,
       addressRegion: address.state,
+      postalCode: address.zip,
       addressCountry: 'US'
     },
     areaServed: business.serviceArea,

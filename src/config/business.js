@@ -20,7 +20,8 @@ module.exports = Object.freeze({
   address: Object.freeze({
     street: '984 Cotorro Road Southeast',
     city: 'Palm Bay',
-    state: 'FL'
+    state: 'FL',
+    zip: '32909'
   }),
 
   // Open every day, Monday through Sunday (24-hour clock)

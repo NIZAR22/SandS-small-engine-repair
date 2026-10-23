@@ -46,11 +46,11 @@ export default {
 
     /**
      * Shop address as one line for map searches
-     * @returns {string} e.g. 984 Cotorro Road Southeast, Palm Bay, FL
+     * @returns {string} e.g. 984 Cotorro Road Southeast, Palm Bay, FL 32909
      */
     mapQuery () {
-      const { street, city, state } = business.address
-      return `${street}, ${city}, ${state}`
+      const { street, city, state, zip } = business.address
+      return `${street}, ${city}, ${state} ${zip}`
     },
 
     /**
@@ -502,6 +502,15 @@ export default {
                 </v-list-item-content>
               </v-list-item>
             </v-list>
+
+            <!--
+              Availability note from the owner
+              Hours can change and every visit needs an appointment
+            -->
+            <p class="text-h6 font-weight-medium text-center mt-4 mb-0">
+              We are a small family-owned business and our hours and availability
+              are subject to change. We are by appointment only.
+            </p>
 
             <!--
               Open 7 Days callout

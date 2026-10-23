@@ -423,7 +423,8 @@ export default {
               7 Days a Week
             </h3>
             <p class="text-h6 grey--text text--darken-2">
-              Open Monday through Sunday, {{ hours }}
+              Open Monday through Sunday, {{ hours }}.
+              By appointment only.
             </p>
           </v-card>
         </v-col>
