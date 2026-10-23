@@ -302,7 +302,7 @@ export default {
                 <p class="text-h6 mb-0">
                   While these tips help maintain your equipment, some repairs require professional expertise.
                   If you experience persistent starting problems, unusual noises, excessive vibration, or loss of power,
-                  bring your equipment to Southern and Sons for a professional diagnosis and repair.
+                  bring your equipment to <strong>Southern and Sons</strong> for a professional diagnosis and repair.
                 </p>
               </v-col>
             </v-row>

@@ -142,7 +142,18 @@ export default {
   font-size: 2.5rem !important; /* 40px */
   line-height: 1.3 !important;
   text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
-  font-weight: 400 !important;
+  font-weight: 700 !important; /* Bold like the name above: it's part of the company name */
+}
+
+/*
+  Family motto from the business card
+  Sits right under the company name, so visitors see it first
+*/
+.hero-motto {
+  font-size: 1.75rem !important; /* 28px */
+  line-height: 1.4 !important;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+  font-style: italic;
 }
 
 /*
@@ -244,7 +255,8 @@ export default {
     font-size: 2rem !important; /* 32px */
   }
 
-  .hero-tagline {
+  .hero-tagline,
+  .hero-motto {
     font-size: 1.5rem !important; /* 24px */
   }
 
@@ -267,7 +279,8 @@ export default {
     font-size: 1.75rem !important; /* 28px */
   }
 
-  .hero-tagline {
+  .hero-tagline,
+  .hero-motto {
     font-size: 1.25rem !important; /* 20px */
   }
 
@@ -374,9 +387,17 @@ export default {
               Slightly smaller than main title
               mb-6 adds more spacing before tagline
             -->
-            <h2 class="text-h3 white--text mb-6 hero-subtitle">
+            <h2 class="text-h3 white--text mb-4 hero-subtitle">
               Small Engine Repair, LLC
             </h2>
+
+            <!--
+              FAMILY MOTTO
+              The owner's line from the business card
+            -->
+            <p class="text-h5 white--text font-weight-medium mb-6 hero-motto">
+              Honest repairs from our family to yours!
+            </p>
 
             <!--
               TAGLINE

@@ -272,7 +272,7 @@ export default {
             Contact Us
           </h2>
           <p class="text-h6 grey--text text--darken-2">
-            Get in touch with Southern and Sons Small Engine Repair
+            Get in touch with <strong>Southern and Sons Small Engine Repair</strong>
           </p>
         </v-col>
       </v-row>

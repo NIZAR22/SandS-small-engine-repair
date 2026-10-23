@@ -166,7 +166,7 @@ export default {
           <h3 class="text-h5 font-weight-bold mb-3 white--text">
             Southern and Sons
           </h3>
-          <p class="text-h6 white--text mb-3">
+          <p class="text-h6 font-weight-bold white--text mb-3">
             Small Engine Repair, LLC
           </p>
           <p class="text-body-1 white--text">
@@ -277,7 +277,7 @@ export default {
             currentYear computed property automatically updates
           -->
           <p class="text-body-1 white--text mb-0">
-            © {{ currentYear }} Southern and Sons Small Engine Repair, LLC. All rights reserved.
+            © {{ currentYear }} <strong>Southern and Sons Small Engine Repair, LLC</strong>. All rights reserved.
           </p>
         </v-col>
 

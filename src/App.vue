@@ -348,7 +348,7 @@ section {
         />
         <div class="d-flex flex-column business-name">
           <div class="text-subtitle-2 font-weight-bold text-uppercase">Southern and Sons</div>
-          <div class="text-caption text-uppercase">Small Engine Repair</div>
+          <div class="text-caption font-weight-bold text-uppercase">Small Engine Repair</div>
         </div>
       </v-toolbar-title>
 
@@ -400,7 +400,7 @@ section {
           <v-list-item-title class="text-h6 font-weight-bold">
             Southern and Sons
           </v-list-item-title>
-          <v-list-item-subtitle class="white--text">
+          <v-list-item-subtitle class="white--text font-weight-bold">
             Small Engine Repair
           </v-list-item-subtitle>
         </v-list-item-content>
