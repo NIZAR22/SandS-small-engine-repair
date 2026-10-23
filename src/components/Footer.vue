@@ -63,29 +63,49 @@ export default {
 
 /*
   Footer background styling
-  Dark background for contrast with page content
-  Uses primary blue color for consistency
+  Navy-purple like the business card, with a red-orange top edge
 */
 .footer-section {
-  background-color: var(--v-primary-base) !important; /* Primary blue */
-  color: white !important;
+  background-color: var(--color-primary) !important; /* Navy-purple */
+  border-top: 4px solid var(--color-accent);
+  color: var(--color-light) !important;
   width: 100%;
   position: relative !important;
   bottom: 0;
 }
 
 /*
+  All footer text in warm white (13:1 on the navy-purple)
+*/
+.footer-section .white--text {
+  color: var(--color-light) !important;
+}
+
+/*
+  Contact icons in red-orange (the lighter shade reads on navy: 5.7:1)
+*/
+.footer-icon {
+  color: var(--color-accent-on-dark) !important;
+}
+
+/*
   Footer link styling
-  White text with hover effect
-  No underline for cleaner look
+  Warm white text; underlined on hover and keyboard focus
 */
 .footer-link {
-  color: white !important;
+  color: var(--color-light) !important;
   text-decoration: none;
   transition: all 0.3s ease;
   display: inline-flex;
   align-items: center;
   max-width: 100%;
+}
+
+.footer-link:hover span,
+.footer-link:focus-visible span {
+  text-decoration: underline;
+  text-decoration-color: var(--color-accent);
+  text-underline-offset: 4px;
 }
 
 /*
@@ -99,21 +119,22 @@ export default {
 
 /*
   Social icon button styling
-  Circular buttons with white icons
+  Circular buttons with warm white icons
   Hover effect changes background
 */
 .social-icon {
   background-color: transparent !important;
-  border: 2px solid white !important;
+  border: 2px solid var(--color-light) !important;
+  color: var(--color-light) !important;
 }
 
 /*
   Social icon hover effect
-  Changes background to accent color
+  Changes background to the red-orange
 */
 .social-icon:hover {
-  background-color: var(--v-accent-base) !important; /* Accent orange */
-  border-color: var(--v-accent-base) !important;
+  background-color: var(--color-button) !important; /* Red-orange */
+  border-color: var(--color-button) !important;
 }
 
 /*
@@ -194,7 +215,7 @@ export default {
               :href="'tel:' + contact.phone"
               class="footer-link"
             >
-              <v-icon color="white" class="mr-2">mdi-phone</v-icon>
+              <v-icon class="mr-2 footer-icon">mdi-phone</v-icon>
               <span class="text-h6">{{ formattedPhone }}</span>
             </a>
           </div>
@@ -205,7 +226,7 @@ export default {
               :href="'mailto:' + contact.email"
               class="footer-link"
             >
-              <v-icon color="white" class="mr-2">mdi-email</v-icon>
+              <v-icon class="mr-2 footer-icon">mdi-email</v-icon>
               <span class="text-h6">{{ emailParts[0] }}<wbr>{{ emailParts[1] }}</span>
             </a>
           </div>
@@ -213,7 +234,7 @@ export default {
           <!-- Location -->
           <div>
             <div class="footer-link" style="cursor: default;">
-              <v-icon color="white" class="mr-2">mdi-map-marker</v-icon>
+              <v-icon class="mr-2 footer-icon">mdi-map-marker</v-icon>
               <span class="text-h6">{{ contact.location }}</span>
             </div>
           </div>

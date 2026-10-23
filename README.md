@@ -43,6 +43,8 @@ SandS Small Engine Repair/
 │   │   └── Footer.vue
 │   ├── config/
 │   │   └── business.js      # Phone, email, address, hours, Facebook: edit business details here
+│   ├── styles/
+│   │   └── theme.css        # Brand color variables, focus outline, reduced motion
 │   ├── plugins/
 │   │   └── vuetify.js       # Vuetify setup and theme colors
 │   ├── utils/
@@ -95,7 +97,7 @@ Setting `foundedYear` adds "since <year>" to the footer and the search-engine da
 
 ### Styling
 
-- **Colors**: Theme colors are in `src/plugins/vuetify.js`. Components use them through classes (`primary--text`) or CSS variables (`var(--v-accent-base)`), so change them there. The accent `#B35900` is dark enough for white text; check that a new color keeps text at 4.5:1 contrast or more.
+- **Colors**: The brand palette comes from the business card. Brand colors are set once in `src/plugins/vuetify.js` (`primary` navy-purple `#29234F`, `secondary` `#3B326B`, `accent` red-orange `#F45150`, `cta` button red `#C8323A`). `src/styles/theme.css` maps them to `--color-*` variables and adds the neutrals (`--color-light` warm white, `--color-background`, `--color-border`, …). Components use the variables or Vuetify classes (`primary--text`, `color="cta"`), never hex values. Use `accent` for icons, borders and indicators, and `cta` for buttons with text: warm white on `#F45150` is only 3.2:1, below WCAG AA. Check that a new color keeps text at 4.5:1 contrast or more.
 - **Photos**: Replace `src/assets/hero.jpg` (the wide photo behind the header and hero) or the other files in `src/assets/`.
 - **Icons**: Material Design Icons 7.4.47 from jsDelivr, pinned with an integrity hash in `public/index.html`. To change the version, update both the URL and the hash.
 

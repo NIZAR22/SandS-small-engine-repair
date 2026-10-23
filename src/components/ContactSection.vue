@@ -121,7 +121,7 @@ export default {
   White background for clean, professional look
 */
 .contact-section {
-  background-color: #ffffff;
+  background-color: var(--color-white);
   margin-bottom: 64px; /* Add space for footer */
 }
 
@@ -143,7 +143,7 @@ export default {
 .contact-item {
   padding: 24px;
   border-radius: 12px;
-  background-color: #f5f5f5; /* Light gray background */
+  background-color: var(--color-background); /* Light neutral background */
   transition: all 0.3s ease;
   overflow-wrap: anywhere;
 }
@@ -153,7 +153,7 @@ export default {
   Subtle color change on hover for interactivity
 */
 .contact-item:hover {
-  background-color: #e3f2fd; /* Light blue on hover */
+  background-color: var(--color-primary-tint); /* Faint navy-purple on hover */
   transform: translateY(-4px);
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
@@ -165,7 +165,7 @@ export default {
 */
 .hours-card {
   border-radius: 12px !important;
-  border-left: 4px solid var(--v-primary-base);
+  border-left: 4px solid var(--color-primary);
   margin-bottom: 24px;
   height: auto !important; /* Ensure card expands to content */
   overflow: visible !important; /* Prevent content clipping */
@@ -177,7 +177,7 @@ export default {
 */
 .hours-item {
   padding: 16px 0;
-  border-bottom: 1px solid #e0e0e0; /* Light divider between items */
+  border-bottom: 1px solid var(--color-border); /* Light divider between items */
   height: auto !important;
 }
 
@@ -268,7 +268,7 @@ export default {
       -->
       <v-row justify="center" class="mb-12">
         <v-col cols="12" class="text-center">
-          <h2 class="text-h3 font-weight-bold primary--text mb-4">
+          <h2 class="text-h3 font-weight-bold primary--text mb-4 brand-underline">
             Contact Us
           </h2>
           <p class="text-h6 grey--text text--darken-2">
@@ -520,7 +520,7 @@ export default {
 
             <div class="text-center">
               <v-chip
-                color="accent"
+                color="cta"
                 text-color="white"
                 large
                 class="px-6 py-4"

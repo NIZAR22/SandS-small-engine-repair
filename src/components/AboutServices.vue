@@ -85,7 +85,7 @@ export default {
   Provides contrast for white cards
 */
 .services-section {
-  background-color: #f5f5f5; /* Light gray background */
+  background-color: var(--color-background); /* Light neutral background */
 }
 
 /*
@@ -234,7 +234,7 @@ export default {
       -->
       <v-row justify="center" class="mb-12">
         <v-col cols="12" class="text-center">
-          <h2 class="text-h3 font-weight-bold primary--text mb-4">
+          <h2 class="text-h3 font-weight-bold primary--text mb-4 brand-underline">
             What We Repair
           </h2>
           <p class="text-h6 grey--text text--darken-2">

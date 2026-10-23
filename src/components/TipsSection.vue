@@ -65,7 +65,7 @@ export default {
   Creates clean, readable layout
 */
 .tips-section {
-  background-color: #ffffff; /* White background */
+  background-color: var(--color-white); /* White background */
 }
 
 /*
@@ -79,7 +79,7 @@ export default {
   height: 100%; /* Equal height cards in grid */
   display: flex;
   flex-direction: column;
-  border-left: 4px solid var(--v-accent-base); /* Orange accent border on left */
+  border-left: 4px solid var(--color-accent); /* Orange accent border on left */
 }
 
 /*
@@ -100,7 +100,7 @@ export default {
   width: 80px;
   height: 80px;
   border-radius: 50%; /* Circular shape */
-  background-color: #FFF3E0; /* Light orange background */
+  background-color: var(--color-light); /* Warm off-white background */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -116,8 +116,8 @@ export default {
   display: inline-block;
   padding: 4px 12px;
   border-radius: 16px;
-  background-color: #E3F2FD; /* Light blue background */
-  color: var(--v-primary-darken1); /* Darker primary blue: readable on the light blue (WCAG AA) */
+  background-color: var(--color-primary-tint); /* Faint navy-purple background */
+  color: var(--color-primary); /* Navy-purple text, 13:1 on its tint */
   font-size: 0.875rem;
   font-weight: 600;
   text-transform: uppercase;
@@ -130,9 +130,24 @@ export default {
   Uses light background to stand out
 */
 .disclaimer-section {
-  background-color: #FFF3E0; /* Light orange background */
+  background-color: var(--color-light); /* Warm off-white background */
   border-radius: 12px;
-  border: 2px solid var(--v-accent-base); /* Orange border */
+  border: 2px solid var(--color-accent); /* Orange border */
+}
+
+/*
+  Call-to-action panel
+  Navy-purple block with warm white text, like the business card
+*/
+.cta-panel {
+  background-color: var(--color-primary);
+  color: var(--color-light);
+  border-radius: 12px;
+  border-top: 4px solid var(--color-accent);
+}
+
+.cta-panel-title {
+  color: var(--color-light);
 }
 
 /*
@@ -204,7 +219,7 @@ export default {
       -->
       <v-row justify="center" class="mb-12">
         <v-col cols="12" class="text-center">
-          <h2 class="text-h3 font-weight-bold primary--text mb-4">
+          <h2 class="text-h3 font-weight-bold primary--text mb-4 brand-underline">
             DIY Maintenance Tips
           </h2>
           <p class="text-h6 grey--text text--darken-2">
@@ -313,41 +328,44 @@ export default {
       <!--
         CALL-TO-ACTION SECTION
         Encourages users to call for professional service
+        Navy-purple panel like the business card, so it stands out
       -->
-      <v-row justify="center" class="mt-12">
-        <v-col cols="12" class="text-center mb-6">
-          <h3 class="text-h4 font-weight-bold primary--text">
-            Need Professional Service?
-          </h3>
-          <p class="text-h6 grey--text text--darken-2 mt-3">
-            Our expert technicians are here to help with all your small engine repair needs
-          </p>
-        </v-col>
-      </v-row>
+      <div class="cta-panel mt-12 pa-8">
+        <v-row justify="center">
+          <v-col cols="12" class="text-center mb-6">
+            <h3 class="text-h4 font-weight-bold cta-panel-title">
+              Need Professional Service?
+            </h3>
+            <p class="text-h6 mt-3 mb-0">
+              Our expert technicians are here to help with all your small engine repair needs
+            </p>
+          </v-col>
+        </v-row>
 
-      <v-row justify="center">
-        <!-- Call Now Button -->
-        <v-col
-          cols="12"
-          sm="6"
-          md="5"
-          lg="4"
-          class="px-2"
-        >
-          <v-btn
-            color="accent"
-            x-large
-            block
-            depressed
-            :href="'tel:' + phoneNumber"
-            class="tips-cta-btn py-7"
-            elevation="4"
+        <v-row justify="center">
+          <!-- Call Now Button -->
+          <v-col
+            cols="12"
+            sm="6"
+            md="5"
+            lg="4"
+            class="px-2"
           >
-            <v-icon left large>mdi-phone</v-icon>
-            <span class="text-h6 font-weight-bold">Call Now</span>
-          </v-btn>
-        </v-col>
-      </v-row>
+            <v-btn
+              color="cta"
+              x-large
+              block
+              depressed
+              :href="'tel:' + phoneNumber"
+              class="tips-cta-btn py-7"
+              elevation="4"
+            >
+              <v-icon left large>mdi-phone</v-icon>
+              <span class="text-h6 font-weight-bold">Call Now</span>
+            </v-btn>
+          </v-col>
+        </v-row>
+      </div>
     </v-container>
   </v-container>
 </template>

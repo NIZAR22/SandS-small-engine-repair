@@ -78,7 +78,7 @@ export default {
 /*
   Dark overlay on background image
   Ensures white text is readable
-  Semi-transparent black layer
+  Semi-transparent dark navy-purple layer
 */
 .hero-overlay {
   position: absolute; /* Position over background */
@@ -86,7 +86,7 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5); /* 50% black opacity */
+  background-color: rgba(23, 19, 46, 0.62); /* Very dark navy-purple tint, keeps white text readable */
   z-index: 1; /* Layer above background, below content */
 }
 
@@ -313,7 +313,7 @@ export default {
     <div class="hero-background">
       <!--
         Dark overlay to ensure text readability
-        Semi-transparent black layer over background image
+        Semi-transparent dark navy-purple layer over background image
       -->
       <div class="hero-overlay"></div>
 
@@ -419,7 +419,7 @@ export default {
                 class="px-2"
               >
                 <v-btn
-                  color="accent"
+                  color="cta"
                   x-large
                   block
                   depressed

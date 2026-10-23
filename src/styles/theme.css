@@ -1,0 +1,89 @@
+/*
+  Southern and Sons brand theme, from the business card
+  The brand colors come from the Vuetify theme in src/plugins/vuetify.js
+  (exposed as --v-*-base variables), so they're set in one place.
+  Components use these --color-* names rather than hex values.
+*/
+:root {
+  /* Primary brand color: deep navy-purple from the business card */
+  --color-primary: var(--v-primary-base); /* #29234F */
+
+  /* Secondary navy-purple for cards, panels and hover backgrounds */
+  --color-primary-light: var(--v-secondary-base); /* #3B326B */
+
+  /* Red-orange from the card's gears: icons, borders, active indicators */
+  --color-accent: var(--v-accent-base); /* #F45150 */
+
+  /* Lighter red-orange for accent text on navy (5.7:1 on --color-primary) */
+  --color-accent-on-dark: #FF7A73;
+
+  /* Warm off-white for text on dark backgrounds and subtle surfaces */
+  --color-light: #FFF4E8;
+
+  /* Neutral dark color for body text and strong contrast */
+  --color-dark: #171717;
+
+  /* Additional neutral surfaces */
+  --color-white: #FFFFFF;
+  --color-background: #FAF9F7;
+  --color-border: #E4DFE5;
+
+  /* Faint navy-purple tint for badges and hover backgrounds on light sections */
+  --color-primary-tint: #ECEAF4;
+
+  /*
+    Semantic colors for interactive elements
+    Buttons and links use the deeper red-orange so their text stays readable
+    (warm white on it 4.9:1; it as link text on light backgrounds 5.0:1)
+  */
+  --color-button: var(--v-cta-base); /* #C8323A */
+  --color-button-hover: var(--v-cta-darken1);
+  --color-link: var(--v-cta-base);
+  --color-link-hover: var(--v-cta-darken1);
+  --color-focus: var(--color-accent);
+}
+
+/* Light, neutral page background behind the sections */
+.v-application {
+  background-color: var(--color-background) !important;
+}
+
+/* Warm white text on red-orange call-to-action buttons */
+.v-btn.cta:not(.v-btn--outlined):not(.v-btn--text) {
+  color: var(--color-light) !important;
+}
+
+.v-btn.cta:not(.v-btn--outlined):not(.v-btn--text):hover {
+  background-color: var(--color-button-hover) !important;
+}
+
+/* Visible keyboard focus everywhere (mouse clicks don't show it) */
+.v-application :focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+/*
+  Short red-orange bar under section headings, echoing the card's accents
+  Usage: add class="brand-underline" to a centered heading
+*/
+.brand-underline::after {
+  content: '';
+  display: block;
+  width: 72px;
+  height: 4px;
+  margin: 16px auto 0;
+  border-radius: 2px;
+  background-color: var(--color-accent);
+}
+
+/* Visitors who ask for less motion get no animations or smooth scrolling */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}

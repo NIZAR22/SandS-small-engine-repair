@@ -117,10 +117,11 @@ export default {
         // Subtract navbar height plus extra padding (20px) for breathing room
         const offsetPosition = elementPosition - navbarHeight - 20
 
-        // Perform smooth scroll animation
+        // Perform smooth scroll animation, unless the visitor asked for less motion
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
         window.scrollTo({
           top: offsetPosition,
-          behavior: 'smooth' // Smooth animation instead of instant jump
+          behavior: reduceMotion ? 'auto' : 'smooth'
         })
       }
     },
@@ -195,14 +196,22 @@ export default {
 }
 
 /*
+  Navbar text: warm white on the navy-purple bar
+*/
+.v-app-bar .v-btn,
+.v-toolbar__title {
+  color: var(--color-light) !important;
+}
+
+/*
   Active navigation button styling
   Makes it obvious which section user is currently viewing
-  Bold white text with a white underline; orange text on the blue bar
-  would be too low-contrast to read
+  Bold warm-white text with a red-orange underline (the bold weight and
+  underline mark it too, not just the color)
 */
 .nav-active {
   font-weight: 700 !important;
-  box-shadow: inset 0 -3px 0 #fff !important;
+  box-shadow: inset 0 -3px 0 var(--color-accent) !important;
 }
 
 /*
@@ -221,17 +230,17 @@ export default {
 /*
   Pulse animation keyframes
   Creates subtle pulsing effect to draw eye to call button
-  Color is the theme accent (#B35900) with transparency
+  Color is the call-to-action red-orange (--color-button, #C8323A) with transparency
 */
 @keyframes pulse {
   0% {
-    box-shadow: 0 0 0 0 rgba(179, 89, 0, 0.7);
+    box-shadow: 0 0 0 0 rgba(200, 50, 58, 0.7);
   }
   70% {
-    box-shadow: 0 0 0 15px rgba(179, 89, 0, 0);
+    box-shadow: 0 0 0 15px rgba(200, 50, 58, 0);
   }
   100% {
-    box-shadow: 0 0 0 0 rgba(179, 89, 0, 0);
+    box-shadow: 0 0 0 0 rgba(200, 50, 58, 0);
   }
 }
 
@@ -245,10 +254,10 @@ section {
 
 /*
   Navigation button hover effects
-  Provides visual feedback on interaction
+  Provides visual feedback on interaction: a faint red-orange glow
 */
 .v-btn--text:hover {
-  background-color: rgba(255, 255, 255, 0.1) !important;
+  background-color: rgba(244, 81, 80, 0.18) !important;
 }
 
 /*
@@ -311,7 +320,7 @@ section {
       <template v-slot:img="{ props }">
         <v-img
           v-bind="props"
-          gradient="to top right, rgba(25, 118, 210, .85), rgba(21, 101, 192, .85)"
+          gradient="to top right, rgba(41, 35, 79, .94), rgba(59, 50, 107, .94)"
         ></v-img>
       </template>
 
@@ -441,7 +450,7 @@ section {
       -->
       <v-list class="pa-4">
         <v-btn
-          color="accent"
+          color="cta"
           large
           block
           :href="'tel:' + phoneNumber"
@@ -505,7 +514,7 @@ section {
       fixed
       bottom
       right
-      color="accent"
+      color="cta"
       x-large
       :href="'tel:' + phoneNumber"
       :aria-label="callLabel"
