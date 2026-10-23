@@ -101,24 +101,13 @@ export default {
   min-height: 100vh;
   display: flex;
   align-items: center;
-  padding-top: 128px; /* Increased from 96px */
+  padding-top: 88px; /* 64px navbar + 24px breathing room */
 }
 
-/* Adjust for mobile */
-@media (max-width: 600px) {
+/* Phones and tablets: the navbar is 56px there */
+@media (max-width: 960px) {
   .hero-content {
-    padding-top: 96px; /* Increased from 72px */
-  }
-
-  .hero-logo {
-    margin-top: 3rem; /* Increased from 2rem */
-  }
-}
-
-/* For medium screens */
-@media (min-width: 601px) and (max-width: 960px) {
-  .hero-content {
-    padding-top: 112px; /* Increased from 84px */
+    padding-top: 80px; /* 56px navbar + 24px breathing room */
   }
 }
 
@@ -206,17 +195,6 @@ export default {
 .hero-cta-btn:hover {
   transform: translateY(-3px); /* Lift effect */
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3) !important; /* Stronger shadow */
-}
-
-/*
-  Scroll indicator container
-  Positions arrow at bottom of hero section
-*/
-.scroll-indicator {
-  position: absolute;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%); /* Center horizontally */
 }
 
 /*
@@ -474,7 +452,7 @@ export default {
               Improves user experience by indicating scrollable content
               Hidden on mobile to save space
             -->
-            <div class="scroll-indicator mt-12 hidden-sm-and-down" style="pointer-events: none;">
+            <div class="mt-2 hidden-sm-and-down" style="pointer-events: none;">
               <v-icon
                 color="white"
                 x-large

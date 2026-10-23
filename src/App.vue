@@ -106,8 +106,8 @@ export default {
       if (element) {
         // Get navbar height to offset scroll position
         // This prevents the navbar from covering the section title
-        // Using a larger offset because prominent navbar is taller
-        const navbarHeight = 128 // Prominent navbar height
+        // (64px on desktop, 56px on phones and tablets)
+        const navbarHeight = document.querySelector('.v-app-bar').offsetHeight
 
         // Calculate exact scroll position
         // getBoundingClientRect gives position relative to viewport
@@ -150,8 +150,8 @@ export default {
       const sections = document.querySelectorAll('section[id]')
 
       // Current scroll position plus offset for navbar
-      // Using larger offset because prominent navbar is taller initially
-      const scrollPosition = window.scrollY + 150
+      // (navbar height plus the 20px breathing room scrollToSection leaves, plus a little slack)
+      const scrollPosition = window.scrollY + 100
 
       // Loop through sections to find which one is currently visible
       sections.forEach(section => {
@@ -237,11 +237,10 @@ export default {
 
 /*
   Section spacing
-  Adds consistent padding between sections
-  Accounts for prominent navbar height
+  Keeps section headings clear of the fixed navbar when jumping to them
 */
 section {
-  scroll-margin-top: 128px; /* Offset for prominent navbar */
+  scroll-margin-top: 84px; /* 64px navbar + 20px breathing room */
 }
 
 /*
@@ -253,8 +252,7 @@ section {
 }
 
 /*
-  Ensure logo and title are vertically centered
-  Even when navbar shrinks
+  Ensure logo and title are vertically centered in the navbar
 */
 .v-toolbar__title {
   display: flex !important;
@@ -271,7 +269,7 @@ section {
   }
 
   section {
-    scroll-margin-top: 64px; /* Smaller offset for mobile navbar */
+    scroll-margin-top: 76px; /* 56px mobile navbar + 20px breathing room */
   }
 }
 
@@ -291,26 +289,19 @@ section {
   -->
   <v-app>
     <!--
-      NAVIGATION BAR - Shrinking header with background image
+      NAVIGATION BAR - Sticky header with background image
       app prop makes it part of v-app layout system (affects v-main padding)
-      fixed keeps navbar always visible at top
-      shrink-on-scroll reduces height when user scrolls down
-      prominent makes the header taller initially for dramatic effect
-      fade-img-on-scroll fades out background image when scrolling
+      fixed keeps navbar always visible at top, at one height the whole time
+      (64px on desktop, 56px on phones and tablets)
       src provides background image for the navbar
-      color provides fallback color when image fades out
-      elevate-on-scroll adds shadow when scrolling
+      color provides fallback color while the image loads
     -->
     <v-app-bar
       app
       fixed
       color="primary"
       dark
-      shrink-on-scroll
-      prominent
       src="@/assets/hero.jpg"
-      fade-img-on-scroll
-      elevate-on-scroll
     >
       <!--
         Custom gradient overlay on navbar background image
