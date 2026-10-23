@@ -10,8 +10,8 @@ module.exports = Object.freeze({
   legalName: 'Southern and Sons Small Engine Repair, LLC',
   siteUrl: 'https://www.southernandsons.com',
 
-  // Digits only; formatPhone() turns it into (321) 345-1480 for display
-  phone: '3213451480',
+  // Digits only; formatPhone() turns it into (321) 339-1790 for display
+  phone: '3213391790',
   email: 'southernandsonspalmbay@gmail.com',
   facebookUrl: 'https://www.facebook.com/profile.php?id=61582473064509',
 

@@ -79,7 +79,7 @@ export default {
 
     /**
      * Screen reader label for the icon-only call button
-     * @returns {string} e.g. Call us at (321) 345-1480
+     * @returns {string} e.g. Call us at (321) 339-1790
      */
     callLabel () {
       return `Call us at ${formatPhone(this.phoneNumber)}`

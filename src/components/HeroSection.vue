@@ -15,7 +15,7 @@ export default {
   computed: {
     /**
      * Formats phone number for display
-     * Converts 3213451480 to (321) 345-1480
+     * Converts 3213391790 to (321) 339-1790
      * Makes number more readable and professional
      * @returns {string} Formatted phone number
      */

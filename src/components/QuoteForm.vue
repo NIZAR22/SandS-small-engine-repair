@@ -91,7 +91,7 @@ export default {
   computed: {
     /**
      * Business phone number for display
-     * @returns {string} Formatted phone number, e.g. (321) 345-1480
+     * @returns {string} Formatted phone number, e.g. (321) 339-1790
      */
     businessPhoneDisplay () {
       return formatPhone(this.businessPhone)

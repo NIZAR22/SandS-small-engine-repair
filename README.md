@@ -225,7 +225,7 @@ Pushing to `main` deploys the site. The GitHub Actions workflow (`.github/workfl
 For technical support or questions about this website:
 
 - **Email**: southernandsonspalmbay@gmail.com
-- **Phone**: (321) 345-1480
+- **Phone**: (321) 339-1790
 - **Facebook**: [Southern and Sons Facebook](https://www.facebook.com/profile.php?id=61582473064509)
 
 ## 📄 License

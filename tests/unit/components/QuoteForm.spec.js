@@ -95,7 +95,7 @@ describe('QuoteForm.vue', () => {
     wrapper.vm.onCaptchaError()
     await wrapper.vm.$nextTick()
     expect(wrapper.text()).toContain('The spam check couldn\'t load')
-    expect(wrapper.text()).toContain('(321) 345-1480')
+    expect(wrapper.text()).toContain('(321) 339-1790')
 
     wrapper.vm.onCaptchaVerified('test-token')
     await wrapper.vm.$nextTick()
@@ -149,7 +149,7 @@ describe('QuoteForm.vue', () => {
     await wrapper.find('form').trigger('submit')
     await flushPromises()
 
-    expect(wrapper.vm.errorMessage).toContain('(321) 345-1480')
+    expect(wrapper.vm.errorMessage).toContain('(321) 339-1790')
     expect(recaptchaReset).toHaveBeenCalled()
     consoleError.mockRestore()
   })
