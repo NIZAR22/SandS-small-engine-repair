@@ -339,7 +339,7 @@ section {
       <!-- LOGO AND BUSINESS NAME - Always visible -->
       <v-toolbar-title class="d-flex align-center pa-0" style="cursor: pointer;" @click="scrollToSection('hero')">
         <v-img
-          src="@/assets/logo-transparent.png"
+          src="@/assets/logo.png"
           alt="Southern and Sons Logo"
           contain
           height="36"
