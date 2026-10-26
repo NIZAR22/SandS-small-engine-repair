@@ -161,7 +161,7 @@ export default {
 @media (max-width: 960px) {
   /* Reduce image height on tablets (v-img renders with the v-image class) */
   .service-image-card .v-image {
-    height: 400px !important;
+    height: 520px !important;
   }
 
   /* Add spacing between stacked columns */
@@ -174,7 +174,7 @@ export default {
 @media (max-width: 600px) {
   /* Further reduce image height on mobile */
   .service-image-card .v-image {
-    height: 300px !important;
+    height: 440px !important;
   }
 
   /* Reduce service item padding on mobile */
@@ -237,8 +237,10 @@ export default {
       <v-row align="center" class="mb-8">
         <!--
           SERVICE IMAGE COLUMN
-          Shows professional image of small engine repair work
+          Photo from the shop: Chris and his son working on a string trimmer
           order-2 on mobile puts image below text for better flow
+          Tall portrait photo: 700px high on desktop (beside the services list),
+          so both faces and the trimmer stay in view
         -->
         <v-col
           cols="12"
@@ -247,9 +249,10 @@ export default {
         >
           <v-card elevation="8" class="service-image-card">
             <v-img
-              src="@/assets/chris and son working in garage.png"
-              alt="Small engine repair service"
-              height="500"
+              src="@/assets/shop-trimmer-repair.jpg"
+              alt="Chris and his son repairing a string trimmer in the Southern and Sons shop"
+              height="700"
+              position="center 50%"
               cover
             >
               <!--
