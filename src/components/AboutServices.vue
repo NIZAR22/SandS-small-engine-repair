@@ -118,6 +118,19 @@ export default {
 }
 
 /*
+  Show the full service name and description
+  Vuetify's list items cut text to one line with "…", which hides what's
+  offered on phones (and the items can't be tapped to see the rest)
+*/
+.service-item ::v-deep .v-list-item__title,
+.service-item ::v-deep .v-list-item__subtitle {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  line-height: 1.4;
+}
+
+/*
   Info card styling
   White cards with rounded corners and consistent spacing
   Equal height ensures aligned grid
