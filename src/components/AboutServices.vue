@@ -157,6 +157,17 @@ export default {
   Optimizes layout and spacing for smaller screens
 */
 
+/*
+  Desktop: the photo is shown whole, so cap its width; on wide screens it
+  would otherwise grow much taller than the services list beside it
+*/
+@media (min-width: 961px) {
+  .service-image-card {
+    max-width: 480px;
+    margin: 0 auto;
+  }
+}
+
 /* Tablets and smaller */
 @media (max-width: 960px) {
   /* Reduce image height on tablets (v-img renders with the v-image class) */
@@ -239,19 +250,20 @@ export default {
           SERVICE IMAGE COLUMN
           Photo from the shop: Chris and his son working on a string trimmer
           order-2 on mobile puts image below text for better flow
-          Tall portrait photo: 700px high on desktop (beside the services list),
-          so both faces and the trimmer stay in view
+          Desktop: the whole portrait photo, uncropped (its own aspect ratio),
+          in a 5/12 column so it's about as tall as the services list
+          Tablets and phones: a fixed-height frame (see styles), cropped to the middle
         -->
         <v-col
           cols="12"
-          md="6"
+          md="5"
           class="order-md-1 order-2"
         >
           <v-card elevation="8" class="service-image-card">
             <v-img
               src="@/assets/shop-trimmer-repair.jpg"
               alt="Chris and his son repairing a string trimmer in the Southern and Sons shop"
-              height="700"
+              :aspect-ratio="1000 / 1776"
               position="center 50%"
               cover
             >
@@ -281,7 +293,7 @@ export default {
         -->
         <v-col
           cols="12"
-          md="6"
+          md="7"
           class="order-md-2 order-1"
         >
           <!--
