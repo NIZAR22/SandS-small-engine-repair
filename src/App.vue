@@ -8,7 +8,7 @@ import ReviewsSection from './components/ReviewsSection.vue'
 import ContactSection from './components/ContactSection.vue'
 import AppFooter from './components/Footer.vue'
 import business from './config/business'
-import { formatPhone } from './utils/format'
+import { formatPhone, phoneHref } from './utils/format'
 
 export default {
   name: 'App',
@@ -32,8 +32,9 @@ export default {
     // Used to highlight active navigation item
     activeSection: 'hero',
 
-    // Business phone number for floating call button
-    phoneNumber: business.phone,
+    // Business phone number for the drawer and floating call buttons
+    formattedPhone: formatPhone(business.phone),
+    phoneHref: phoneHref(business.phone),
 
     // Navigation items for mobile drawer
     // Each item maps to a section id
@@ -78,11 +79,11 @@ export default {
     },
 
     /**
-     * Screen reader label for the icon-only call button
-     * @returns {string} e.g. Call us at (321) 339-1790
+     * Screen reader label for the call buttons
+     * @returns {string} e.g. Call Southern and Sons at (321) 339-1790
      */
     callLabel () {
-      return `Call us at ${formatPhone(this.phoneNumber)}`
+      return `Call ${business.name} at ${this.formattedPhone}`
     }
   },
 
@@ -249,6 +250,28 @@ export default {
   100% {
     box-shadow: 0 0 0 0 rgba(200, 50, 58, 0);
   }
+}
+
+/*
+  Drawer menu item titles
+  The dense list sets a 16px line-height, too short for the 20px text-h6
+  font, so overflow: hidden clipped descenders (the "p" in "Tips").
+  ::v-deep because v-list-item-title doesn't carry this component's scope.
+*/
+.drawer-nav.v-list--dense ::v-deep .drawer-nav-title {
+  line-height: 1.4;
+}
+
+/* Trim the padding by the same 4px so each item stays 40px tall */
+.drawer-nav.v-list--dense ::v-deep .v-list-item__content {
+  padding: 6px 0;
+}
+
+/*
+  Drawer call button: keep the phone number on one line
+*/
+.drawer-call-btn {
+  white-space: nowrap;
 }
 
 /*
@@ -430,7 +453,7 @@ section {
         Each item scrolls to section and closes drawer
         Large text and icons for senior-friendly mobile experience
       -->
-      <v-list nav dense class="py-2">
+      <v-list nav dense class="drawer-nav py-2">
         <v-list-item
           v-for="item in navItems"
           :key="item.id"
@@ -442,7 +465,7 @@ section {
             <v-icon size="28" color="primary">{{ item.icon }}</v-icon>
           </v-list-item-icon>
           <v-list-item-content>
-            <v-list-item-title class="text-h6">
+            <v-list-item-title class="text-h6 drawer-nav-title">
               {{ item.title }}
             </v-list-item-title>
           </v-list-item-content>
@@ -460,11 +483,12 @@ section {
           color="cta"
           large
           block
-          :href="'tel:' + phoneNumber"
-          class="py-6"
+          :href="phoneHref"
+          :aria-label="callLabel"
+          class="drawer-call-btn py-6"
         >
           <v-icon left>mdi-phone</v-icon>
-          Call Now
+          {{ formattedPhone }}
         </v-btn>
       </v-list>
     </v-navigation-drawer>
@@ -528,7 +552,7 @@ section {
       right
       color="cta"
       x-large
-      :href="'tel:' + phoneNumber"
+      :href="phoneHref"
       :aria-label="callLabel"
       class="floating-call-btn"
       elevation="8"

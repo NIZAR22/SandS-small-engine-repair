@@ -1,6 +1,6 @@
 <script>
 import business from '@/config/business'
-import { formatPhone, formatHours, splitEmail } from '@/utils/format'
+import { formatPhone, phoneHref, formatHours, splitEmail } from '@/utils/format'
 
 const WEEKDAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
@@ -34,6 +34,13 @@ export default {
      */
     formattedPhone () {
       return formatPhone(this.contact.phone)
+    },
+
+    /**
+     * tel: link for the phone number, e.g. tel:+13213391790
+     */
+    phoneHref () {
+      return phoneHref(this.contact.phone)
     },
 
     /**
@@ -296,7 +303,7 @@ a:focus-visible .contact-item {
           class="mb-4 mb-md-0"
         >
           <a
-            :href="'tel:' + contact.phone"
+            :href="phoneHref"
             class="text-decoration-none"
           >
             <div class="contact-item text-center">

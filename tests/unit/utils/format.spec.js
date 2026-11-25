@@ -1,4 +1,4 @@
-import { formatPhone, formatTime, formatHours, splitEmail } from '@/utils/format'
+import { formatPhone, phoneHref, formatTime, formatHours, splitEmail } from '@/utils/format'
 
 describe('formatPhone', () => {
   it('formats 10 digits for display', () => {
@@ -7,6 +7,12 @@ describe('formatPhone', () => {
 
   it('returns anything that is not 10 digits unchanged', () => {
     expect(formatPhone('12345')).toBe('12345')
+  })
+})
+
+describe('phoneHref', () => {
+  it('builds an E.164 tel: link', () => {
+    expect(phoneHref('3213451480')).toBe('tel:+13213451480')
   })
 })
 

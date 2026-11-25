@@ -1,13 +1,16 @@
 <script>
 import business from '@/config/business'
+import { formatPhone, phoneHref } from '@/utils/format'
 
 export default {
   name: 'TipsSection',
 
   // Component data - reactive properties
   data: () => ({
-    // Business phone number for Call Now button
-    phoneNumber: business.phone,
+    // Business phone number for the call button
+    formattedPhone: formatPhone(business.phone),
+    phoneHref: phoneHref(business.phone),
+    callLabel: `Call ${business.name} at ${formatPhone(business.phone)}`,
 
     // Array of maintenance tips
     // Each tip has title, description, icon, and category
@@ -148,6 +151,7 @@ export default {
   min-height: 70px !important;
   font-size: 1.25rem !important;
   letter-spacing: 0.5px;
+  white-space: nowrap; /* Keep the phone number on one line */
   transition: all 0.3s ease;
 }
 
@@ -333,7 +337,7 @@ export default {
         </v-row>
 
         <v-row justify="center">
-          <!-- Call Now Button -->
+          <!-- Call button: shows the phone number and dials it -->
           <v-col
             cols="12"
             sm="6"
@@ -346,12 +350,13 @@ export default {
               x-large
               block
               depressed
-              :href="'tel:' + phoneNumber"
+              :href="phoneHref"
+              :aria-label="callLabel"
               class="tips-cta-btn py-7"
               elevation="4"
             >
               <v-icon left large>mdi-phone</v-icon>
-              <span class="text-h6 font-weight-bold">Call Now</span>
+              <span class="text-h6 font-weight-bold">{{ formattedPhone }}</span>
             </v-btn>
           </v-col>
         </v-row>

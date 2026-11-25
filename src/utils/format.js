@@ -15,6 +15,16 @@ function formatPhone (digits) {
 }
 
 /**
+ * Builds a tel: link in E.164 format (+1 country code for the US)
+ * Converts 3213451480 to tel:+13213451480
+ * @param {string} digits - 10-digit US phone number, digits only
+ * @returns {string} tel: link
+ */
+function phoneHref (digits) {
+  return `tel:+1${String(digits).replace(/\D/g, '')}`
+}
+
+/**
  * Splits an email address before the @, so templates can put a <wbr> there
  * and long addresses wrap as "name / @domain" on narrow screens
  * @param {string} email - Email address
@@ -46,4 +56,4 @@ function formatHours ({ open, close }) {
   return `${formatTime(open)} - ${formatTime(close)}`
 }
 
-module.exports = { formatPhone, splitEmail, formatTime, formatHours }
+module.exports = { formatPhone, phoneHref, splitEmail, formatTime, formatHours }

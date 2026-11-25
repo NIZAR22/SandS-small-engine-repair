@@ -1,6 +1,6 @@
 <script>
 import business from '@/config/business'
-import { formatPhone, formatHours, splitEmail } from '@/utils/format'
+import { formatPhone, phoneHref, formatHours, splitEmail } from '@/utils/format'
 
 export default {
   name: 'AppFooter',
@@ -42,6 +42,13 @@ export default {
      */
     formattedPhone () {
       return formatPhone(this.contact.phone)
+    },
+
+    /**
+     * tel: link for the phone number, e.g. tel:+13213391790
+     */
+    phoneHref () {
+      return phoneHref(this.contact.phone)
     },
 
     /**
@@ -222,7 +229,7 @@ export default {
           <!-- Phone link -->
           <div class="mb-3">
             <a
-              :href="'tel:' + contact.phone"
+              :href="phoneHref"
               class="footer-link"
             >
               <v-icon class="mr-2 footer-icon">mdi-phone</v-icon>
