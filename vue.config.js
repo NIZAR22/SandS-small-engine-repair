@@ -1,6 +1,6 @@
 const { defineConfig } = require('@vue/cli-service')
 const business = require('./src/config/business')
-const { formatPhone, formatHours } = require('./src/utils/format')
+const { formatPhone, phoneHref, formatHours } = require('./src/utils/format')
 
 /**
  * Vue CLI configuration for Southern and Sons Small Engine Repair website
@@ -52,6 +52,7 @@ function structuredData () {
  */
 const noscriptDetails = {
   phone: formatPhone(business.phone),
+  phoneHref: phoneHref(business.phone),
   address: `${business.address.street}, ${business.address.city}, ${business.address.state} ${business.address.zip}`,
   hours: `Open Monday - Sunday, ${formatHours(business.hours)}, by appointment only`
 }

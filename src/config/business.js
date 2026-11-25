@@ -11,6 +11,7 @@ module.exports = Object.freeze({
   siteUrl: 'https://www.southernandsons.com',
 
   // Digits only; formatPhone() turns it into (321) 339-1790 for display
+  // and phoneHref() into tel:+13213391790 for call links
   phone: '3213391790',
   email: 'info@southernandsons.com',
   facebookUrl: 'https://www.facebook.com/profile.php?id=61582473064509',

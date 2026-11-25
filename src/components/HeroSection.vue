@@ -1,6 +1,6 @@
 <script>
 import business from '@/config/business'
-import { formatPhone } from '@/utils/format'
+import { formatPhone, phoneHref } from '@/utils/format'
 
 export default {
   name: 'HeroSection',
@@ -8,7 +8,9 @@ export default {
   // Component data - reactive properties
   data: () => ({
     // Business phone number
-    phoneNumber: business.phone
+    phoneNumber: business.phone,
+    phoneHref: phoneHref(business.phone),
+    callLabel: `Call ${business.name} at ${formatPhone(business.phone)}`
   }),
 
   // Computed properties - derived reactive data
@@ -184,6 +186,7 @@ export default {
   min-height: 70px !important; /* Tall buttons for easy clicking */
   font-size: 1.25rem !important; /* 20px */
   letter-spacing: 0.5px;
+  white-space: nowrap; /* Keep the phone number on one line */
   transition: all 0.3s ease; /* Smooth hover animation */
 }
 
@@ -405,8 +408,8 @@ export default {
               class="mt-8"
             >
               <!--
-                CALL NOW BUTTON
-                Main CTA - direct phone call
+                CALL BUTTON
+                Main CTA - shows the phone number and dials it
                 Orange accent color makes it stand out
                 x-large size for senior-friendly clicking
                 href with tel: link opens phone dialer on mobile
@@ -423,28 +426,16 @@ export default {
                   x-large
                   block
                   depressed
-                  :href="'tel:' + phoneNumber"
+                  :href="phoneHref"
+                  :aria-label="callLabel"
                   class="hero-cta-btn py-7"
                   elevation="4"
                 >
                   <v-icon left large>mdi-phone</v-icon>
-                  <span class="text-h6 font-weight-bold">Call Now</span>
+                  <span class="text-h6 font-weight-bold">{{ formattedPhoneNumber }}</span>
                 </v-btn>
               </v-col>
             </v-row>
-
-            <!--
-              PHONE NUMBER DISPLAY
-              Shows phone number prominently for easy reference
-              Even if user doesn't click button, they can see number
-              Especially helpful for desktop users
-            -->
-            <div class="mt-8">
-              <p class="text-h5 white--text font-weight-medium">
-                <v-icon color="white" large class="mr-2">mdi-phone</v-icon>
-                {{ formattedPhoneNumber }}
-              </p>
-            </div>
 
             <!--
               SCROLL DOWN INDICATOR
@@ -452,7 +443,7 @@ export default {
               Improves user experience by indicating scrollable content
               Hidden on mobile to save space
             -->
-            <div class="mt-2 hidden-sm-and-down" style="pointer-events: none;">
+            <div class="mt-16 pt-5 hidden-sm-and-down" style="pointer-events: none;">
               <v-icon
                 color="white"
                 x-large
