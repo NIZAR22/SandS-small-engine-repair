@@ -12,7 +12,7 @@ module.exports = Object.freeze({
 
   // Digits only; formatPhone() turns it into (321) 339-1790 for display
   phone: '3213391790',
-  email: 'southernandsonspalmbay@gmail.com',
+  email: 'info@southernandsons.com',
   facebookUrl: 'https://www.facebook.com/profile.php?id=61582473064509',
   // Google Business Profile (Maps listing with the reviews)
   googleReviewsUrl: 'https://maps.app.goo.gl/Saau5TDkDFHMgZwb8',
